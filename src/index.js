@@ -12,7 +12,7 @@ const model = new GameModel(canvas.width, canvas.height)
 const controller = new GameController(view, model)
 
 // TODO: Button menu for start/quit game.
-
+controller.preRun()
 /**
  * Application starting point.
  */

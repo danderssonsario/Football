@@ -14,7 +14,10 @@ export class GameController {
     this.#model = model
   }
 
+  preRun() {
+    this.#view.drawField(this.#model.field)
+  }
   run () {
-    this.#view.drawFootballField(this.#model.field)
+    this.#view.drawBall(this.#model.ball)
   }
 }

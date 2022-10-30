@@ -9,7 +9,7 @@ export class View {
     this.#context = context
   }
 
-  drawFootballField (field) {
+  drawField (field) {
     this.#field = field
     this.#drawGrass()
     this.#drawLines()
@@ -54,5 +54,16 @@ export class View {
     this.#context.stroke()
     this.#context.closePath()
     this.#context.restore()
+  }
+
+  drawBall (ball) {
+    console.log(ball)
+    this.#context.drawImage(
+      ball.image,
+      ball.positionX,
+      ball.positionY,
+      ball.radius * 2,
+      ball.radius * 2
+    )
   }
 }
