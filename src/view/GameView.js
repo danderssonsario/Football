@@ -57,7 +57,6 @@ export class View {
   }
 
   drawBall (ball) {
-    console.log(ball)
     this.#context.drawImage(
       ball.image,
       ball.positionX,
@@ -65,5 +64,9 @@ export class View {
       ball.radius * 2,
       ball.radius * 2
     )
+  }
+
+  drawPlayer (player) {
+    player.draw()
   }
 }
