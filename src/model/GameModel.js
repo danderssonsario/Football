@@ -20,6 +20,7 @@ export class GameModel {
   constructor (width, height, context) {
     this.#field = new Field(width, height, 75, 150)
     this.#ball = new Ball(width / 2 - 25, height / 2 - 25, 25)
+    this.#ball.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
 
     const optionsForPlayer1 = {
       positionX: 100,
@@ -41,8 +42,8 @@ export class GameModel {
 
     this.#sprite1 = new Sprite('player1', context, optionsForPlayer1)
     this.#sprite2 = new Sprite('player2', context, optionsForPlayer2)
-    this.#sprite1.bounds = { x: { min: 0, max: (width - this.#sprite1.width) }, y: { min: 0, max: (height - this.#sprite1.height) } }
-    this.#sprite2.bounds = { x: { min: 0, max: (width - this.#sprite2.width) }, y: { min: 0, max: (height - this.#sprite2.height) } }
+    this.#sprite1.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
+    this.#sprite2.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
     this.#addPlayerAnimations()
     this.#sprite1.setCurrentAnimation('right')
     this.#sprite2.setCurrentAnimation('left')
@@ -54,6 +55,7 @@ export class GameModel {
   update () {
     this.#sprite1.update()
     this.#sprite2.update()
+    this.#ball.update()
   }
 
   /**

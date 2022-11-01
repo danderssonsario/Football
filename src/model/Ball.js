@@ -14,4 +14,8 @@ export class Ball extends Circle {
   get image () {
     return this.#image
   }
+
+  update() {
+    super.update()
+  }
 }

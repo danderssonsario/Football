@@ -82,16 +82,16 @@ export class Rectangle extends Body {
       this.positionX = this.#bounds.x.min
       this.velocityX = 0
     }
-    if (this.positionX > this.#bounds.x.max) {
-      this.positionX = this.#bounds.x.max
+    if (this.positionX > (this.#bounds.x.max - this.width)) {
+      this.positionX = (this.#bounds.x.max - this.width)
       this.velocityX = 0
     }
     if (this.positionY < this.#bounds.y.min) {
       this.positionY = this.#bounds.y.min
       this.velocityY = 0
     }
-    if (this.positionY > this.#bounds.y.max) {
-      this.positionY = this.#bounds.y.max
+    if (this.positionY > (this.#bounds.y.max - this.height)) {
+      this.positionY = (this.#bounds.y.max - this.height)
       this.velocityY = 0
     }
   }
@@ -103,7 +103,7 @@ export class Rectangle extends Body {
    * @returns {boolean} - True if collision is detected, false if not.
    */
   detectCollision (target) {
-    if (this.#objectsOverlap(target)) {
+    if (this.#overlap(target)) {
       return true
     } else {
       return false
@@ -111,7 +111,7 @@ export class Rectangle extends Body {
   }
 
   // eslint-disable-next-line jsdoc/require-jsdoc
-  #objectsOverlap (target) {
+  #overlap (target) {
     if (
       this.positionX + this.width >= target.positionX &&
       this.positionX <= target.positionX + target.width &&
