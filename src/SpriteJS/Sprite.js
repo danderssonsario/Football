@@ -25,6 +25,7 @@ export class Sprite extends Rectangle {
   #animations
   #currentAnimation
   #delayPerFrame
+  #pauseAnimation
 
   /**
    *
@@ -52,6 +53,18 @@ export class Sprite extends Rectangle {
     // Current (Animation = one or more frames)
     this.#currentFrame = null
     this.#currentFrameIndex = 0
+    this.#pauseAnimation = true
+  }
+
+  get pauseAnimation () {
+    return this.#pauseAnimation
+  }
+
+  /**
+   * @param {boolean} value
+   */
+  set pauseAnimation (value) {
+    this.#pauseAnimation = value
   }
 
   /**
@@ -143,7 +156,6 @@ export class Sprite extends Rectangle {
       this.width,
       this.height
     )
-    this.#context.restore()
   }
 
   /**
@@ -197,7 +209,7 @@ export class Sprite extends Rectangle {
    */
   #updateFrame () {
     this.#currentFrame = this.#currentAnimation.frames[this.#currentFrameIndex]
-    if (this.#hasReachedDelay()) {
+    if (this.#hasReachedDelay() && !this.#pauseAnimation) {
       if (this.#currentFrameIndex >= this.#currentAnimation.frames.length - 1) {
         this.#currentFrameIndex = 0
       } else {

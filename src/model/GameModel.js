@@ -1,16 +1,15 @@
 import { Field } from './Field.js'
 import { Ball } from './Ball.js'
-import { Player } from './Player.js'
 import { Sprite } from '../SpriteJS/Sprite.js'
 
 /**
- * Encapsulates game rules.
+ * Encapsulates game objects and rules.
  */
 export class GameModel {
   #field
   #ball
-  #player1
-  #player2
+  #sprite1
+  #sprite2
 
   /**
    *
@@ -40,20 +39,20 @@ export class GameModel {
       angle: 0
     }
 
-    this.#player1 = new Sprite('player1', context, optionsForPlayer1)
-    this.#player2 = new Sprite('player2', context, optionsForPlayer2)
+    this.#sprite1 = new Sprite('player1', context, optionsForPlayer1)
+    this.#sprite2 = new Sprite('player2', context, optionsForPlayer2)
 
     this.#setPlayerAnimations()
-    this.#player1.setCurrentAnimation('right')
-    this.#player2.setCurrentAnimation('left')
+    this.#sprite1.setCurrentAnimation('right')
+    this.#sprite2.setCurrentAnimation('left')
   }
 
   /**
    *
    */
   update () {
-    this.#player1.update()
-    this.#player2.update()
+    this.#sprite1.update()
+    this.#sprite2.update()
   }
 
   /**
@@ -61,7 +60,7 @@ export class GameModel {
    * @param player
    */
   #setPlayerAnimations () {
-    this.#player1.addAnimation({
+    this.#sprite1.addAnimation({
       name: 'down',
       frameWidth: 64,
       frameHeight: 64,
@@ -69,7 +68,7 @@ export class GameModel {
       rowIndex: 0,
       delayPerFrame: 100
     })
-    this.#player1.addAnimation({
+    this.#sprite1.addAnimation({
       name: 'left',
       frameWidth: 64,
       frameHeight: 64,
@@ -77,7 +76,7 @@ export class GameModel {
       rowIndex: 1,
       delayPerFrame: 100
     })
-    this.#player1.addAnimation({
+    this.#sprite1.addAnimation({
       name: 'right',
       frameWidth: 64,
       frameHeight: 64,
@@ -85,16 +84,16 @@ export class GameModel {
       rowIndex: 2,
       delayPerFrame: 100
     })
-    this.#player1.addAnimation({
+    this.#sprite1.addAnimation({
       name: 'up',
       frameWidth: 64,
       frameHeight: 64,
       frameCount: 4,
-      rowIndex: 4,
+      rowIndex: 3,
       delayPerFrame: 100
     })
 
-    this.#player2.addAnimation({
+    this.#sprite2.addAnimation({
       name: 'down',
       frameWidth: 64,
       frameHeight: 64,
@@ -102,7 +101,7 @@ export class GameModel {
       rowIndex: 0,
       delayPerFrame: 100
     })
-    this.#player2.addAnimation({
+    this.#sprite2.addAnimation({
       name: 'left',
       frameWidth: 64,
       frameHeight: 64,
@@ -110,7 +109,7 @@ export class GameModel {
       rowIndex: 1,
       delayPerFrame: 100
     })
-    this.#player2.addAnimation({
+    this.#sprite2.addAnimation({
       name: 'right',
       frameWidth: 64,
       frameHeight: 64,
@@ -118,12 +117,12 @@ export class GameModel {
       rowIndex: 2,
       delayPerFrame: 100
     })
-    this.#player2.addAnimation({
+    this.#sprite2.addAnimation({
       name: 'up',
       frameWidth: 64,
       frameHeight: 64,
       frameCount: 4,
-      rowIndex: 4,
+      rowIndex: 3,
       delayPerFrame: 100
     })
   }
@@ -142,11 +141,11 @@ export class GameModel {
     return this.#ball
   }
 
-  get player1 () {
-    return this.#player1
+  get sprite1 () {
+    return this.#sprite1
   }
 
-  get player2 () {
-    return this.#player2
+  get sprite2 () {
+    return this.#sprite2
   }
 }
