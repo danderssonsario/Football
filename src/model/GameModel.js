@@ -41,8 +41,9 @@ export class GameModel {
 
     this.#sprite1 = new Sprite('player1', context, optionsForPlayer1)
     this.#sprite2 = new Sprite('player2', context, optionsForPlayer2)
-
-    this.#setPlayerAnimations()
+    this.#sprite1.bounds = { x: { min: 0, max: (width - this.#sprite1.width) }, y: { min: 0, max: (height - this.#sprite1.height) } }
+    this.#sprite2.bounds = { x: { min: 0, max: (width - this.#sprite2.width) }, y: { min: 0, max: (height - this.#sprite2.height) } }
+    this.#addPlayerAnimations()
     this.#sprite1.setCurrentAnimation('right')
     this.#sprite2.setCurrentAnimation('left')
   }
@@ -59,7 +60,7 @@ export class GameModel {
    *
    * @param player
    */
-  #setPlayerAnimations () {
+  #addPlayerAnimations () {
     this.#sprite1.addAnimation({
       name: 'down',
       frameWidth: 64,

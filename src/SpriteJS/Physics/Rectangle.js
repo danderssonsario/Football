@@ -78,39 +78,20 @@ export class Rectangle extends Body {
    * Checks movement boundaries.
    */
   #checkBounds () {
-    let minimumSpriteX = null
-    let maximumSpriteX = null
-    let minimumSpriteY = null
-    let maximumSpriteY = null
-
-    // Get maximum and minimum coordinates for sprite.
-    for (const vertex in this.vertices) {
-      if (minimumSpriteX === null || this.vertices[vertex].x < minimumSpriteX) {
-        minimumSpriteX = this.vertices[vertex].x
-      }
-      if (maximumSpriteX === null || this.vertices[vertex].x > maximumSpriteX) {
-        maximumSpriteX = this.vertices[vertex].x
-      }
-      if (minimumSpriteY === null || this.vertices[vertex].y < minimumSpriteY) {
-        minimumSpriteY = this.vertices[vertex].y
-      }
-      if (maximumSpriteY === null || this.vertices[vertex].y > maximumSpriteY) {
-        maximumSpriteY = this.vertices[vertex].y
-      }
+    if (this.positionX < this.#bounds.x.min) {
+      this.positionX = this.#bounds.x.min
+      this.velocityX = 0
     }
-
-    // Compare to bounding box
-    if (minimumSpriteX < this.#bounds.x.min) {
-      this.positionX += 1
+    if (this.positionX > this.#bounds.x.max) {
+      this.positionX = this.#bounds.x.max
       this.velocityX = 0
-    } else if (maximumSpriteX > this.#bounds.x.max) {
-      this.positionX -= 1
-      this.velocityX = 0
-    } else if (minimumSpriteY < this.#bounds.y.min) {
-      this.positionY += 1
+    }
+    if (this.positionY < this.#bounds.y.min) {
+      this.positionY = this.#bounds.y.min
       this.velocityY = 0
-    } else if (maximumSpriteY > this.#bounds.y.max) {
-      this.positionY -= 1
+    }
+    if (this.positionY > this.#bounds.y.max) {
+      this.positionY = this.#bounds.y.max
       this.velocityY = 0
     }
   }
