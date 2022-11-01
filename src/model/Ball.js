@@ -9,6 +9,8 @@ export class Ball extends Circle {
     const img  = new Image()
     img.src = '../image/Ball.png'
     this.#image = img
+
+    this.friction = 0.80
   }
 
   get image () {

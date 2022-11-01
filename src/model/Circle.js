@@ -35,19 +35,19 @@ export class Circle extends Body {
   #checkBounds () {
     if (this.positionX < this.#bounds.x.min) {
       this.positionX = this.#bounds.x.min
-      this.velocityX = 0
+      this.velocityX *= -1.5
     }
     if (this.positionX > (this.#bounds.x.max - this.width)) {
       this.positionX = (this.#bounds.x.max - this.width)
-      this.velocityX = 0
+      this.velocityX *= -1.5
     }
     if (this.positionY < this.#bounds.y.min) {
       this.positionY = this.#bounds.y.min
-      this.velocityY = 0
+      this.velocityY *= -1.5
     }
     if (this.positionY > (this.#bounds.y.max - this.height)) {
       this.positionY = (this.#bounds.y.max - this.height)
-      this.velocityY = 0
+      this.velocityY *= -1.5
     }
   }
 }
