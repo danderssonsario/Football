@@ -19,7 +19,7 @@ export class GameModel {
    */
   constructor (width, height, context) {
     this.#field = new Field(width, height, 75, 150)
-    this.#ball = new Ball(width / 2 - 25, height / 2 - 25, 25)
+    this.#ball = new Ball(width / 2 - 25, height / 2 - 35, 25)
     this.#ball.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
 
     const optionsForPlayer1 = {
@@ -51,16 +51,6 @@ export class GameModel {
 
   /**
    *
-   */
-  update () {
-    this.#sprite1.update()
-    this.#sprite2.update()
-    this.#ball.update()
-  }
-
-  /**
-   *
-   * @param player
    */
   #addPlayerAnimations () {
     this.#sprite1.addAnimation({
@@ -133,6 +123,55 @@ export class GameModel {
   /**
    *
    */
+  update () {
+    this.#sprite1.update()
+    this.#sprite2.update()
+    this.#ball.update()
+    this.#detectPlayerToBallCollision()
+    this.#detectPlayerToPlayerCollision()
+  }
+
+  /**
+   *
+   */
+  #detectPlayerToBallCollision () {
+    if (this.#sprite1.distanceTo(this.#ball) < (this.#sprite1.width / 2 + this.#ball.radius) || this.#sprite1.distanceTo(this.#ball) < (this.#sprite1.height / 2 + this.#ball.radius)) {
+      this.#kickBall()
+    }
+    if (this.#sprite2.distanceTo(this.#ball) < this.#sprite2.width / 2 || this.#sprite2.distanceTo(this.#ball) < this.#sprite2.height / 2) {
+      this.#kickBall2()
+    }
+  }
+
+  /**
+   *
+   */
+  #kickBall () {
+    const newVelocityX = this.sprite1.distanceTo(this.#ball) * Math.cos((this.#sprite1.angleTo(this.#ball) * Math.PI / 180))
+    const newVelocityY = this.sprite1.distanceTo(this.#ball) * Math.sin((this.#sprite1.angleTo(this.#ball) * Math.PI / 180))
+    this.#sprite1.velocityX = -newVelocityX
+    this.#sprite1.velocityY = -newVelocityY
+    this.#ball.velocityX = newVelocityX
+    this.#ball.velocityY = newVelocityY
+  }
+
+  /**
+   *
+   */
+  #kickBall2 () {}
+
+  /**
+   *
+   */
+  #detectPlayerToPlayerCollision () {
+    if (this.#sprite1.detectCollision(this.sprite2)) {
+      console.log('hej')
+    }
+  }
+
+  /**
+   *
+   */
   get field () {
     return this.#field
   }
@@ -144,10 +183,16 @@ export class GameModel {
     return this.#ball
   }
 
+  /**
+   *
+   */
   get sprite1 () {
     return this.#sprite1
   }
 
+  /**
+   *
+   */
   get sprite2 () {
     return this.#sprite2
   }

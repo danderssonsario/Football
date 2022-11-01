@@ -8,7 +8,8 @@ export class Circle extends Body {
     super(positionX, positionY)
 
     this.radius = radius
-    this.#diameter = radius * 2
+    this.width = radius * 2
+    this.height = radius * 2
   }
 
   /**
@@ -36,16 +37,16 @@ export class Circle extends Body {
       this.positionX = this.#bounds.x.min
       this.velocityX = 0
     }
-    if (this.positionX > (this.#bounds.x.max - this.#diameter)) {
-      this.positionX = (this.#bounds.x.max - this.#diameter)
+    if (this.positionX > (this.#bounds.x.max - this.width)) {
+      this.positionX = (this.#bounds.x.max - this.width)
       this.velocityX = 0
     }
     if (this.positionY < this.#bounds.y.min) {
       this.positionY = this.#bounds.y.min
       this.velocityY = 0
     }
-    if (this.positionY > (this.#bounds.y.max - this.#diameter)) {
-      this.positionY = (this.#bounds.y.max - this.#diameter)
+    if (this.positionY > (this.#bounds.y.max - this.height)) {
+      this.positionY = (this.#bounds.y.max - this.height)
       this.velocityY = 0
     }
   }

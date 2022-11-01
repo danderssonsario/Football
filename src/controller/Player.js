@@ -38,20 +38,20 @@ export class Player {
 
     if (keyLeft.pressed && !keyRight.pressed) {
       this.#sprite.setCurrentAnimation('left')
-      this.#sprite.velocityX = -50
+      this.#sprite.velocityX = -10
     } else if (!keyLeft.pressed && keyRight.pressed) {
       this.#sprite.setCurrentAnimation('right')
-      this.#sprite.velocityX = 50
+      this.#sprite.velocityX = 10
     } else {
       this.#sprite.velocityX = 0
     }
 
     if (keyUp.pressed && !keyDown.pressed) {
       this.#sprite.setCurrentAnimation('up')
-      this.#sprite.velocityY = -50
+      this.#sprite.velocityY = -10
     } else if (!keyUp.pressed && keyDown.pressed) {
       this.#sprite.setCurrentAnimation('down')
-      this.#sprite.velocityY = 50
+      this.#sprite.velocityY = 10
     } else {
       this.#sprite.velocityY = 0
     }
