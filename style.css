@@ -11,3 +11,13 @@ body {
   align-items: center;
   background-color: dimgray;
 }
+
+.scoreboard {
+  text-align: center;
+  font-family: monospace;
+  font-size: x-large;
+  font-weight: 600;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: whitesmoke;
+}

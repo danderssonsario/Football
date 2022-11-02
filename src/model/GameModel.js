@@ -54,6 +54,10 @@ export class GameModel {
 
     this.#leftGoal = new Goal(50, (height - 200) / 2, 50, 200)
     this.#rightGoal = new Goal(width - 50, (height - 200) / 2, 50, 200)
+
+    this.redScore = document.querySelector('#team_red')
+    console.log(this.redScore)
+    this.greenScore = document.querySelector('#team_green')
   }
 
   /**
@@ -181,12 +185,14 @@ export class GameModel {
     if (this.#ball.positionX <= this.#leftGoal.positionX) {
       if (this.#ball.positionY > this.#leftGoal.positionY && this.#ball.positionY < this.#leftGoal.positionY + this.#leftGoal.height) {
         this.#sprite2.addScore()
+        this.greenScore.textContent = this.#sprite2.score
       }
     }
 
     if (this.#ball.positionX + this.#ball.width >= this.#rightGoal.positionX) {
       if (this.#ball.positionY > this.#rightGoal.positionY && this.#ball.positionY < this.#rightGoal.positionY + this.#rightGoal.height) {
         this.#sprite1.addScore()
+        this.redScore.textContent = this.#sprite1.score
       }
     }
   }
