@@ -1,13 +1,11 @@
 import { PlayerController } from './PlayerController.js'
 
 /**
- * Handles commands for model and view.
+ * Handles a game sequence.
  */
 export class GameController {
   #model
   #view
-  #inputHandler1
-  #inputHandler2
   #playerControllerRed
   #playerControllerGreen
 
@@ -34,18 +32,20 @@ export class GameController {
     ]
 
     this.#playerControllerRed = new PlayerController(this.#model.playerRed, playerController1)
-    this.#playerControllerGreen = new PlayerController(this.#model.playerGreen, playerController2, model)
+    this.#playerControllerGreen = new PlayerController(this.#model.playerGreen, playerController2)
   }
 
   /**
-   *
+   * Runs through all game events.
    */
   run () {
+    this.#model.update()
+    this.#playerControllerRed.checkForPlayerMoves()
+    this.#playerControllerGreen.checkForPlayerMoves()
     this.#view.drawField(this.#model.field)
     this.#view.drawBall(this.#model.ball)
-    this.#model.update()
-    this.#playerControllerRed.update()
-    this.#playerControllerGreen.update()
+    this.#view.drawGoal(this.#model.goalRed)
+    this.#view.drawGoal(this.#model.goalGreen)
     this.#view.drawPlayer(this.#model.playerRed)
     this.#view.drawPlayer(this.#model.playerGreen)
   }

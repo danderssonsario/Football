@@ -1,17 +1,18 @@
 /**
- * General input handler for keyup/keydown events.
+ * Input handler for keyup/keydown events.
  */
 export class InputHandler {
   #keys
 
   /**
-   * @param keys - Keys to toggle when event fires. [ { value: 'a', pressed: false } ]
+   * @param {object} keys - Keys to toggle when event fires.
+   * e.g [ { value: 'a', pressed: false } ]
    */
   constructor (keys) {
     this.#keys = keys
 
-    addEventListener('keydown', this.#keyDownHandler.bind(this))
-    addEventListener('keyup', this.#keyUpHandler.bind(this))
+    addEventListener('keydown', this.#handleKeyDown.bind(this))
+    addEventListener('keyup', this.#handleKeyUp.bind(this))
   }
 
   /**
@@ -28,7 +29,7 @@ export class InputHandler {
    *
    * @param {object} event - Event object.
    */
-  #keyDownHandler (event) {
+  #handleKeyDown (event) {
     this.#keys = this.#keys.map(key => {
       return key.value === event.key ? { ...key, pressed: true } : key
     })
@@ -39,7 +40,7 @@ export class InputHandler {
    *
    * @param {object} event - Event object.
    */
-  #keyUpHandler (event) {
+  #handleKeyUp (event) {
     this.#keys = this.#keys.map(key => {
       return key.value === event.key ? { ...key, pressed: false } : key
     })

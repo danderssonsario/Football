@@ -12,7 +12,7 @@ const model = new GameModel(canvas.width, canvas.height, context)
 const controller = new GameController(view, model)
 
 /**
- * Application starting point.
+ * Game loop.
  */
 function animate () {
   controller.run()

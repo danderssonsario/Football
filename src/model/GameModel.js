@@ -12,8 +12,8 @@ export class GameModel {
   #ball
   #playerRed
   #playerGreen
-  #leftGoal
-  #rightGoal
+  #goalRed
+  #goalGreen
 
   /**
    *
@@ -26,7 +26,7 @@ export class GameModel {
     this.#ball = new Ball(500, height / 2 - 35, 15)
     this.#ball.bounds = { x: { min: 50, max: width - 50 }, y: { min: 50, max: height - 50 } }
 
-    const optionsForPlayer1 = {
+    const playerRedOptions = {
       positionX: 100,
       positionY: height / 2 - 50,
       width: 80,
@@ -35,7 +35,7 @@ export class GameModel {
       angle: 0
     }
 
-    const optionsForPlayer2 = {
+    const playerGreenOptions = {
       positionX: width - 200,
       positionY: height / 2 - 50,
       width: 80,
@@ -44,19 +44,18 @@ export class GameModel {
       angle: 0
     }
 
-    this.#playerRed = new Player('player1', context, optionsForPlayer1)
-    this.#playerGreen = new Player('player2', context, optionsForPlayer2)
+    this.#playerRed = new Player('player1', context, playerRedOptions)
+    this.#playerGreen = new Player('player2', context, playerGreenOptions)
     this.#playerRed.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
     this.#playerGreen.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
     this.#addPlayerAnimations()
     this.#playerRed.setCurrentAnimation('right')
     this.#playerGreen.setCurrentAnimation('left')
 
-    this.#leftGoal = new Goal(50, (height - 200) / 2, 50, 200)
-    this.#rightGoal = new Goal(width - 50, (height - 200) / 2, 50, 200)
+    this.#goalRed = new Goal('red', 50, (height - 200) / 2, 50, 200)
+    this.#goalGreen = new Goal('green', width - 50, (height - 200) / 2, 50, 200)
 
     this.redScore = document.querySelector('#team_red')
-    console.log(this.redScore)
     this.greenScore = document.querySelector('#team_green')
   }
 
@@ -132,20 +131,20 @@ export class GameModel {
   }
 
   /**
-   *
+   * Updates game objects.
    */
   update () {
     this.#playerRed.update()
     this.#playerGreen.update()
     this.#ball.update()
-    this.#detectPlayerToBallCollision()
-    this.#detectBallToGoalCollision()
+    this.#checkForPlayerToBallCollision()
+    this.#checkBallToGoalCollision()
   }
 
   /**
    *
    */
-  #detectPlayerToBallCollision () {
+  #checkForPlayerToBallCollision () {
     if (this.#playerRed.distanceTo(this.#ball) < (this.#playerRed.width / 2 + this.#ball.radius) || this.#playerRed.distanceTo(this.#ball) < (this.#playerRed.height / 2 + this.#ball.radius)) {
       this.#kickBall()
     }
@@ -158,8 +157,8 @@ export class GameModel {
    *
    */
   #kickBall () {
-    const newVelocityX = this.sprite1.distanceTo(this.#ball) * Math.cos((this.#playerRed.angleTo(this.#ball) * Math.PI / 180))
-    const newVelocityY = this.sprite1.distanceTo(this.#ball) * Math.sin((this.#playerRed.angleTo(this.#ball) * Math.PI / 180))
+    const newVelocityX = this.#playerRed.distanceTo(this.#ball) * Math.cos((this.#playerRed.angleTo(this.#ball) * Math.PI / 180))
+    const newVelocityY = this.#playerRed.distanceTo(this.#ball) * Math.sin((this.#playerRed.angleTo(this.#ball) * Math.PI / 180))
     this.#playerRed.velocityX = -newVelocityX
     this.#playerRed.velocityY = -newVelocityY
     this.#ball.velocityX = newVelocityX
@@ -181,16 +180,16 @@ export class GameModel {
   /**
    *
    */
-  #detectBallToGoalCollision () {
-    if (this.#ball.positionX <= this.#leftGoal.positionX) {
-      if (this.#ball.positionY > this.#leftGoal.positionY && this.#ball.positionY < this.#leftGoal.positionY + this.#leftGoal.height) {
+  #checkBallToGoalCollision () {
+    if (this.#ball.positionX <= this.#goalRed.positionX) {
+      if (this.#ball.positionY > this.#goalRed.positionY && this.#ball.positionY < this.#goalRed.positionY + this.#goalRed.height) {
         this.#playerGreen.addScore()
         this.greenScore.textContent = this.#playerGreen.score
       }
     }
 
-    if (this.#ball.positionX + this.#ball.width >= this.#rightGoal.positionX) {
-      if (this.#ball.positionY > this.#rightGoal.positionY && this.#ball.positionY < this.#rightGoal.positionY + this.#rightGoal.height) {
+    if (this.#ball.positionX + this.#ball.width >= this.#goalGreen.positionX) {
+      if (this.#ball.positionY > this.#goalGreen.positionY && this.#ball.positionY < this.#goalGreen.positionY + this.#goalGreen.height) {
         this.#playerRed.addScore()
         this.redScore.textContent = this.#playerRed.score
       }

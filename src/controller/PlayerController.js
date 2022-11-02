@@ -1,6 +1,6 @@
 import { InputHandler } from './InputHandler.js'
 /**
- * Encapsulates player movement controllers.
+ * Converts key inputs into commands for player.
  */
 export class PlayerController {
   #player
@@ -16,14 +16,10 @@ export class PlayerController {
     this.#inputHandler = new InputHandler(controllers)
   }
 
-  update () {
-    this.#movePlayer()
-  }
-
   /**
-   * Moves player according to key input.
+   * Checks controller keys and determines player moves.
    */
-  #movePlayer () {
+  checkForPlayerMoves () {
     const keyUp = this.#inputHandler.keys.find(element => element.action === 'up')
     const keyDown = this.#inputHandler.keys.find(element => element.action === 'down')
     const keyLeft = this.#inputHandler.keys.find(element => element.action === 'left')
