@@ -23,12 +23,12 @@ export class GameModel {
    */
   constructor (width, height, context) {
     this.#field = new Field(width, height, 75, 150)
-    this.#ball = new Ball(500, height / 2 - 35, 15)
+    this.#ball = new Ball('../image/Ball.png', width / 2 - 15, height / 2 - 15, 15)
     this.#ball.bounds = { x: { min: 50, max: width - 50 }, y: { min: 50, max: height - 50 } }
 
     const playerRedOptions = {
       positionX: 100,
-      positionY: height / 2 - 50,
+      positionY: height / 2 - 40,
       width: 80,
       height: 80,
       image: '../image/player1.png',
@@ -37,7 +37,7 @@ export class GameModel {
 
     const playerGreenOptions = {
       positionX: width - 200,
-      positionY: height / 2 - 50,
+      positionY: height / 2 - 40,
       width: 80,
       height: 80,
       image: '../image/player2.png',
@@ -52,8 +52,8 @@ export class GameModel {
     this.#playerRed.setCurrentAnimation('right')
     this.#playerGreen.setCurrentAnimation('left')
 
-    this.#goalRed = new Goal('red', 50, (height - 200) / 2, 50, 200)
-    this.#goalGreen = new Goal('green', width - 50, (height - 200) / 2, 50, 200)
+    this.#goalRed = new Goal('red', 50, (height - 150) / 2, 150)
+    this.#goalGreen = new Goal('green', width - 50, (height - 150) / 2, 150)
 
     this.redScore = document.querySelector('#team_red')
     this.greenScore = document.querySelector('#team_green')
@@ -222,5 +222,13 @@ export class GameModel {
    */
   get playerGreen () {
     return this.#playerGreen
+  }
+
+  get goalRed () {
+    return this.#goalRed
+  }
+
+  get goalGreen () {
+    return this.#goalGreen
   }
 }

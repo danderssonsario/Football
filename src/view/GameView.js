@@ -36,21 +36,12 @@ export class View {
     this.#context.closePath()
   }
 
-  drawGoal () {
+  drawGoal (goal) {
     this.#context.beginPath()
-
-    this.#context.strokeStyle = 'red'
+    this.#context.strokeStyle = goal.color
     this.#context.lineWidth = 5
-    this.#context.moveTo(this.#field.offsetFromEdge, (this.#field.height - this.#field.goalWidth) / 2)
-    this.#context.lineTo(this.#field.offsetFromEdge, (this.#field.height - this.#field.goalWidth) / 2 + this.#field.goalWidth)
-    this.#context.stroke()
-    this.#context.closePath()
-    this.#context.restore()
-    this.#context.beginPath()
-    this.#context.strokeStyle = 'green'
-    this.#context.lineWidth = 5
-    this.#context.moveTo(this.#field.width - this.#field.offsetFromEdge, (this.#field.height - this.#field.goalWidth) / 2)
-    this.#context.lineTo(this.#field.width - this.#field.offsetFromEdge, (this.#field.height - this.#field.goalWidth) / 2 + this.#field.goalWidth)
+    this.#context.moveTo(goal.positionX, goal.positionY)
+    this.#context.lineTo(goal.positionX, (goal.positionY + goal.width))
     this.#context.stroke()
     this.#context.closePath()
     this.#context.restore()
@@ -61,8 +52,8 @@ export class View {
       ball.image,
       ball.positionX,
       ball.positionY,
-      ball.radius * 2,
-      ball.radius * 2
+      ball.width,
+      ball.height
     )
   }
 
