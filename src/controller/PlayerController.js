@@ -2,7 +2,7 @@ import { InputHandler } from './InputHandler.js'
 /**
  * Encapsulates player movement controllers.
  */
-export class Player {
+export class PlayerController {
   #sprite
   #inputHandler
   #speed = 5

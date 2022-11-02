@@ -13,13 +13,13 @@ export class View {
     this.#field = field
     this.#drawGrass()
     this.#drawLines()
-    this.#drawGoals()
+    this.#drawGoals(field.goals)
   }
 
   #drawGrass () {
     this.#context.save()
     this.#context.fillStyle = 'rgb(165, 196, 125)'
-    this.#context.fillRect(0, 0, this.#field.width, this.#field.height)
+    this.#context.fillRect(0, 0, 1000, this.#field.height + this.#field.offsetFromEdge)
   }
 
   #drawLines () {

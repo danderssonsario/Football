@@ -1,5 +1,4 @@
-import { InputHandler } from './InputHandler'
-import { Player } from './Player'
+import { PlayerController } from './PlayerController.js'
 
 /**
  * Handles commands for model and view.
@@ -34,8 +33,8 @@ export class GameController {
       { value: 's', action: 'down', pressed: false }
     ]
 
-    this.#player1 = new Player(this.#model.sprite1, playerController1)
-    this.#player2 = new Player(this.#model.sprite2, playerController2, model)
+    this.#player1 = new PlayerController(this.#model.sprite1, playerController1)
+    this.#player2 = new PlayerController(this.#model.sprite2, playerController2, model)
   }
 
   /**
