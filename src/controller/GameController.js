@@ -8,8 +8,8 @@ export class GameController {
   #view
   #inputHandler1
   #inputHandler2
-  #player1
-  #player2
+  #playerControllerRed
+  #playerControllerGreen
 
   /**
    * @param {GameView} view - Class instance for user interface.
@@ -33,8 +33,8 @@ export class GameController {
       { value: 's', action: 'down', pressed: false }
     ]
 
-    this.#player1 = new PlayerController(this.#model.sprite1, playerController1)
-    this.#player2 = new PlayerController(this.#model.sprite2, playerController2, model)
+    this.#playerControllerRed = new PlayerController(this.#model.playerRed, playerController1)
+    this.#playerControllerGreen = new PlayerController(this.#model.playerGreen, playerController2, model)
   }
 
   /**
@@ -44,9 +44,9 @@ export class GameController {
     this.#view.drawField(this.#model.field)
     this.#view.drawBall(this.#model.ball)
     this.#model.update()
-    this.#player1.update()
-    this.#player2.update()
-    this.#view.drawPlayer(this.#model.sprite1)
-    this.#view.drawPlayer(this.#model.sprite2)
+    this.#playerControllerRed.update()
+    this.#playerControllerGreen.update()
+    this.#view.drawPlayer(this.#model.playerRed)
+    this.#view.drawPlayer(this.#model.playerGreen)
   }
 }

@@ -3,57 +3,52 @@ import { InputHandler } from './InputHandler.js'
  * Encapsulates player movement controllers.
  */
 export class PlayerController {
-  #sprite
+  #player
   #inputHandler
-  #speed = 5
 
   /**
    *
-   * @param {object} sprite - Player sprite instance.
-   * @param {object} controller - Controllers for moving player.
+   * @param {object} player - Player instance.
+   * @param {object} controllers - Controllers for moving player.
    */
-  constructor (sprite, controller) {
-    this.#sprite = sprite
-    this.#inputHandler = new InputHandler(controller)
+  constructor (player, controllers) {
+    this.#player = player
+    this.#inputHandler = new InputHandler(controllers)
   }
 
   update () {
-    this.#move()
+    this.#movePlayer()
   }
 
   /**
    * Moves player according to key input.
    */
-  #move () {
+  #movePlayer () {
     const keyUp = this.#inputHandler.keys.find(element => element.action === 'up')
     const keyDown = this.#inputHandler.keys.find(element => element.action === 'down')
     const keyLeft = this.#inputHandler.keys.find(element => element.action === 'left')
     const keyRight = this.#inputHandler.keys.find(element => element.action === 'right')
 
     if (keyLeft.pressed || keyRight.pressed || keyUp.pressed || keyDown.pressed) {
-      this.#sprite.pauseAnimation = false
+      this.#player.pauseAnimation = false
     } else if (!keyLeft.pressed && !keyRight.pressed && !keyUp.pressed && !keyDown.pressed) {
-      this.#sprite.pauseAnimation = true
+      this.#player.pauseAnimation = true
     }
 
     if (keyLeft.pressed && !keyRight.pressed) {
-      this.#sprite.setCurrentAnimation('left')
-      this.#sprite.velocityX = -10
+      this.#player.moveLeft()
     } else if (!keyLeft.pressed && keyRight.pressed) {
-      this.#sprite.setCurrentAnimation('right')
-      this.#sprite.velocityX = 10
+      this.#player.moveRight()
     } else {
-      this.#sprite.velocityX = 0
+      this.#player.dontMoveHorizontally()
     }
 
     if (keyUp.pressed && !keyDown.pressed) {
-      this.#sprite.setCurrentAnimation('up')
-      this.#sprite.velocityY = -10
+      this.#player.moveUp()
     } else if (!keyUp.pressed && keyDown.pressed) {
-      this.#sprite.setCurrentAnimation('down')
-      this.#sprite.velocityY = 10
+      this.#player.moveDown()
     } else {
-      this.#sprite.velocityY = 0
+      this.#player.dontMoveVertically()
     }
   }
 }

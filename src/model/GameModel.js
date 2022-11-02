@@ -10,8 +10,8 @@ import { Player } from './Player.js'
 export class GameModel {
   #field
   #ball
-  #sprite1
-  #sprite2
+  #playerRed
+  #playerGreen
   #leftGoal
   #rightGoal
 
@@ -44,13 +44,13 @@ export class GameModel {
       angle: 0
     }
 
-    this.#sprite1 = new Player('player1', context, optionsForPlayer1)
-    this.#sprite2 = new Player('player2', context, optionsForPlayer2)
-    this.#sprite1.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
-    this.#sprite2.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
+    this.#playerRed = new Player('player1', context, optionsForPlayer1)
+    this.#playerGreen = new Player('player2', context, optionsForPlayer2)
+    this.#playerRed.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
+    this.#playerGreen.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
     this.#addPlayerAnimations()
-    this.#sprite1.setCurrentAnimation('right')
-    this.#sprite2.setCurrentAnimation('left')
+    this.#playerRed.setCurrentAnimation('right')
+    this.#playerGreen.setCurrentAnimation('left')
 
     this.#leftGoal = new Goal(50, (height - 200) / 2, 50, 200)
     this.#rightGoal = new Goal(width - 50, (height - 200) / 2, 50, 200)
@@ -64,7 +64,7 @@ export class GameModel {
    *
    */
   #addPlayerAnimations () {
-    this.#sprite1.addAnimation({
+    this.#playerRed.addAnimation({
       name: 'down',
       frameWidth: 64,
       frameHeight: 64,
@@ -72,7 +72,7 @@ export class GameModel {
       rowIndex: 0,
       delayPerFrame: 100
     })
-    this.#sprite1.addAnimation({
+    this.#playerRed.addAnimation({
       name: 'left',
       frameWidth: 64,
       frameHeight: 64,
@@ -80,7 +80,7 @@ export class GameModel {
       rowIndex: 1,
       delayPerFrame: 100
     })
-    this.#sprite1.addAnimation({
+    this.#playerRed.addAnimation({
       name: 'right',
       frameWidth: 64,
       frameHeight: 64,
@@ -88,7 +88,7 @@ export class GameModel {
       rowIndex: 2,
       delayPerFrame: 100
     })
-    this.#sprite1.addAnimation({
+    this.#playerRed.addAnimation({
       name: 'up',
       frameWidth: 64,
       frameHeight: 64,
@@ -97,7 +97,7 @@ export class GameModel {
       delayPerFrame: 100
     })
 
-    this.#sprite2.addAnimation({
+    this.#playerGreen.addAnimation({
       name: 'down',
       frameWidth: 64,
       frameHeight: 64,
@@ -105,7 +105,7 @@ export class GameModel {
       rowIndex: 0,
       delayPerFrame: 100
     })
-    this.#sprite2.addAnimation({
+    this.#playerGreen.addAnimation({
       name: 'left',
       frameWidth: 64,
       frameHeight: 64,
@@ -113,7 +113,7 @@ export class GameModel {
       rowIndex: 1,
       delayPerFrame: 100
     })
-    this.#sprite2.addAnimation({
+    this.#playerGreen.addAnimation({
       name: 'right',
       frameWidth: 64,
       frameHeight: 64,
@@ -121,7 +121,7 @@ export class GameModel {
       rowIndex: 2,
       delayPerFrame: 100
     })
-    this.#sprite2.addAnimation({
+    this.#playerGreen.addAnimation({
       name: 'up',
       frameWidth: 64,
       frameHeight: 64,
@@ -135,8 +135,8 @@ export class GameModel {
    *
    */
   update () {
-    this.#sprite1.update()
-    this.#sprite2.update()
+    this.#playerRed.update()
+    this.#playerGreen.update()
     this.#ball.update()
     this.#detectPlayerToBallCollision()
     this.#detectBallToGoalCollision()
@@ -146,10 +146,10 @@ export class GameModel {
    *
    */
   #detectPlayerToBallCollision () {
-    if (this.#sprite1.distanceTo(this.#ball) < (this.#sprite1.width / 2 + this.#ball.radius) || this.#sprite1.distanceTo(this.#ball) < (this.#sprite1.height / 2 + this.#ball.radius)) {
+    if (this.#playerRed.distanceTo(this.#ball) < (this.#playerRed.width / 2 + this.#ball.radius) || this.#playerRed.distanceTo(this.#ball) < (this.#playerRed.height / 2 + this.#ball.radius)) {
       this.#kickBall()
     }
-    if (this.#sprite2.distanceTo(this.#ball) < this.#sprite2.width / 2 || this.#sprite2.distanceTo(this.#ball) < this.#sprite2.height / 2) {
+    if (this.#playerGreen.distanceTo(this.#ball) < this.#playerGreen.width / 2 || this.#playerGreen.distanceTo(this.#ball) < this.#playerGreen.height / 2) {
       this.#kickBall2()
     }
   }
@@ -158,10 +158,10 @@ export class GameModel {
    *
    */
   #kickBall () {
-    const newVelocityX = this.sprite1.distanceTo(this.#ball) * Math.cos((this.#sprite1.angleTo(this.#ball) * Math.PI / 180))
-    const newVelocityY = this.sprite1.distanceTo(this.#ball) * Math.sin((this.#sprite1.angleTo(this.#ball) * Math.PI / 180))
-    this.#sprite1.velocityX = -newVelocityX
-    this.#sprite1.velocityY = -newVelocityY
+    const newVelocityX = this.sprite1.distanceTo(this.#ball) * Math.cos((this.#playerRed.angleTo(this.#ball) * Math.PI / 180))
+    const newVelocityY = this.sprite1.distanceTo(this.#ball) * Math.sin((this.#playerRed.angleTo(this.#ball) * Math.PI / 180))
+    this.#playerRed.velocityX = -newVelocityX
+    this.#playerRed.velocityY = -newVelocityY
     this.#ball.velocityX = newVelocityX
     this.#ball.velocityY = newVelocityY
   }
@@ -170,10 +170,10 @@ export class GameModel {
    *
    */
   #kickBall2 () {
-    const newVelocityX = this.#sprite2.distanceTo(this.#ball) * Math.cos((this.#sprite2.angleTo(this.#ball) * Math.PI / 180))
-    const newVelocityY = this.#sprite2.distanceTo(this.#ball) * Math.sin((this.#sprite2.angleTo(this.#ball) * Math.PI / 180))
-    this.#sprite2.velocityX = -newVelocityX
-    this.#sprite2.velocityY = -newVelocityY
+    const newVelocityX = this.#playerGreen.distanceTo(this.#ball) * Math.cos((this.#playerGreen.angleTo(this.#ball) * Math.PI / 180))
+    const newVelocityY = this.#playerGreen.distanceTo(this.#ball) * Math.sin((this.#playerGreen.angleTo(this.#ball) * Math.PI / 180))
+    this.#playerGreen.velocityX = -newVelocityX
+    this.#playerGreen.velocityY = -newVelocityY
     this.#ball.velocityX = newVelocityX
     this.#ball.velocityY = newVelocityY
   }
@@ -184,15 +184,15 @@ export class GameModel {
   #detectBallToGoalCollision () {
     if (this.#ball.positionX <= this.#leftGoal.positionX) {
       if (this.#ball.positionY > this.#leftGoal.positionY && this.#ball.positionY < this.#leftGoal.positionY + this.#leftGoal.height) {
-        this.#sprite2.addScore()
-        this.greenScore.textContent = this.#sprite2.score
+        this.#playerGreen.addScore()
+        this.greenScore.textContent = this.#playerGreen.score
       }
     }
 
     if (this.#ball.positionX + this.#ball.width >= this.#rightGoal.positionX) {
       if (this.#ball.positionY > this.#rightGoal.positionY && this.#ball.positionY < this.#rightGoal.positionY + this.#rightGoal.height) {
-        this.#sprite1.addScore()
-        this.redScore.textContent = this.#sprite1.score
+        this.#playerRed.addScore()
+        this.redScore.textContent = this.#playerRed.score
       }
     }
   }
@@ -214,14 +214,14 @@ export class GameModel {
   /**
    *
    */
-  get sprite1 () {
-    return this.#sprite1
+  get playerRed () {
+    return this.#playerRed
   }
 
   /**
    *
    */
-  get sprite2 () {
-    return this.#sprite2
+  get playerGreen () {
+    return this.#playerGreen
   }
 }
