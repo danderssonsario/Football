@@ -11,12 +11,7 @@ const view = new View(context)
 const model = new GameModel(canvas.width, canvas.height, context)
 const controller = new GameController(view, model)
 
-/**
- * Game loop.
- */
-function animate () {
+window.addEventListener('load', () => {
+  // Application starting point.
   controller.run()
-}
-setInterval(() => {
-  requestAnimationFrame(animate)
-}, 100)
+})

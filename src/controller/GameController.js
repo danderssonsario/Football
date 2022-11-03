@@ -35,6 +35,11 @@ export class GameController {
     this.#playerControllerGreen = new PlayerController(this.#model.playerGreen, playerController2)
   }
 
+  start () {
+    const input = this.#view.ge
+    if ()
+  }
+
   /**
    * Runs through all game events.
    */
