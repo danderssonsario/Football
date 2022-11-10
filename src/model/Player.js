@@ -1,5 +1,8 @@
 import { Sprite } from "../SpriteJS/Sprite";
 
+/**
+ * Class that wraps the Sprite class.
+ */
 export class Player extends Sprite {
   constructor (name, context, options) {
     super (name, context, options)

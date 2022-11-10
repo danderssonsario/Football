@@ -16,7 +16,7 @@ export class View {
   #drawGrass (field) {
     this.#context.save()
     this.#context.fillStyle = 'rgb(165, 196, 125)'
-    this.#context.fillRect(0, 0, 1000, field.height + field.offsetFromEdge)
+    this.#context.fillRect(0, 0, field.width, field.height + field.offsetFromEdge)
   }
 
   #drawLines (field) {

@@ -1,6 +1,6 @@
 import { InputHandler } from './InputHandler.js'
 /**
- * Converts key inputs into commands for player.
+ * Converts key inputs into commands for a player.
  */
 export class PlayerController {
   #player
