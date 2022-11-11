@@ -1,4 +1,7 @@
 # Football game
+## Requirements and Testing for the project
+Can be found at [_TEST.md](./_TEST.md)
+
 ## Description of code
 ### Components
 The code is developed object oriented using a MVC-pattern and is therefore split into three major parts;
