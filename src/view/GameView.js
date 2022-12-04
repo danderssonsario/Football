@@ -60,4 +60,9 @@ export class View {
   drawPlayer (player) {
     player.draw()
   }
+
+  updateScoreBoard (scoreBoard) {
+    document.querySelector('#team_red').textContent = scoreBoard.redScore
+    document.querySelector('#team_green').textContent = scoreBoard.greenScore
+  }
 }

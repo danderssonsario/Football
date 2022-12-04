@@ -1,8 +1,8 @@
 import { Field } from './Field.js'
 import { Ball } from './Ball.js'
-import { Sprite } from '../SpriteJS/Sprite.js'
 import { Goal } from './Goal.js'
 import { Player } from './Player.js'
+import { ScoreBoard } from './Scoreboard.js'
 
 /**
  * Encapsulates game objects and rules.
@@ -14,6 +14,7 @@ export class GameModel {
   #playerGreen
   #goalRed
   #goalGreen
+  #scoreBoard
 
   /**
    *
@@ -54,9 +55,7 @@ export class GameModel {
 
     this.#goalRed = new Goal('red', 50, (height - 150) / 2, 150)
     this.#goalGreen = new Goal('green', width - 50, (height - 150) / 2, 150)
-
-    this.redScore = document.querySelector('#team_red')
-    this.greenScore = document.querySelector('#team_green')
+    this.#scoreBoard = new ScoreBoard(0, 0)
   }
 
   /**
@@ -145,81 +144,68 @@ export class GameModel {
    *
    */
   #checkForPlayerToBallCollision () {
-    if (this.#playerRed.distanceTo(this.#ball) < (this.#playerRed.width / 2 + this.#ball.radius) || this.#playerRed.distanceTo(this.#ball) < (this.#playerRed.height / 2 + this.#ball.radius)) {
-      this.#kickBall()
+    if (this.#playerRedCollidesWithBall()) {
+      this.#playerRed.kick(this.#ball)
     }
-    if (this.#playerGreen.distanceTo(this.#ball) < this.#playerGreen.width / 2 || this.#playerGreen.distanceTo(this.#ball) < this.#playerGreen.height / 2) {
-      this.#kickBall2()
+    if (this.#playerGreenCollidesWithBall()) {
+      this.#playerGreen.kick(this.#ball)
     }
+
   }
 
-  /**
-   *
-   */
-  #kickBall () {
-    const newVelocityX = this.#playerRed.distanceTo(this.#ball) * Math.cos((this.#playerRed.angleTo(this.#ball) * Math.PI / 180))
-    const newVelocityY = this.#playerRed.distanceTo(this.#ball) * Math.sin((this.#playerRed.angleTo(this.#ball) * Math.PI / 180))
-    this.#playerRed.velocityX = -newVelocityX
-    this.#playerRed.velocityY = -newVelocityY
-    this.#ball.velocityX = newVelocityX
-    this.#ball.velocityY = newVelocityY
+  #playerRedCollidesWithBall () {
+    return this.#playerRed.distanceTo(this.#ball) < (this.#playerRed.width / 2 + this.#ball.radius) ||
+           this.#playerRed.distanceTo(this.#ball) < (this.#playerRed.height / 2 + this.#ball.radius)
   }
 
-  /**
-   *
-   */
-  #kickBall2 () {
-    const newVelocityX = this.#playerGreen.distanceTo(this.#ball) * Math.cos((this.#playerGreen.angleTo(this.#ball) * Math.PI / 180))
-    const newVelocityY = this.#playerGreen.distanceTo(this.#ball) * Math.sin((this.#playerGreen.angleTo(this.#ball) * Math.PI / 180))
-    this.#playerGreen.velocityX = -newVelocityX
-    this.#playerGreen.velocityY = -newVelocityY
-    this.#ball.velocityX = newVelocityX
-    this.#ball.velocityY = newVelocityY
+  #playerGreenCollidesWithBall () {
+    return this.#playerGreen.distanceTo(this.#ball) < this.#playerGreen.width / 2 ||
+           this.#playerGreen.distanceTo(this.#ball) < this.#playerGreen.height / 2
   }
 
   /**
    *
    */
   #checkBallToGoalCollision () {
-    if (this.#ball.positionX <= this.#goalRed.positionX) {
-      if (this.#ball.positionY > this.#goalRed.positionY && this.#ball.positionY < this.#goalRed.positionY + this.#goalRed.height) {
-        this.#playerGreen.addScore()
-        this.greenScore.textContent = this.#playerGreen.score
-      }
+    if (this.#ballCollidesWithRedGoal()) {
+      this.#scoreBoard.addScoreForRedTeam()
     }
 
-    if (this.#ball.positionX + this.#ball.width >= this.#goalGreen.positionX) {
-      if (this.#ball.positionY > this.#goalGreen.positionY && this.#ball.positionY < this.#goalGreen.positionY + this.#goalGreen.height) {
-        this.#playerRed.addScore()
-        this.redScore.textContent = this.#playerRed.score
-      }
+    if (this.#ballCollidesWithGreenGoal()) {
+      this.#scoreBoard.addScoreForGreenTeam()
+    }
+  }
+  
+  // todo: refactorera denna
+  // skapa en detectcollision i ball och skicka in player för att undvika code duplication?
+  #ballCollidesWithRedGoal () {
+    if (this.#ball.positionX <= this.#goalRed.positionX && this.#ball.positionY > this.#goalRed.positionY && this.#ball.positionY < this.#goalRed.positionY + this.#goalRed.height) {
+      return true
+    } else {
+      return false
     }
   }
 
-  /**
-   *
-   */
+  #ballCollidesWithGreenGoal () {
+    if (this.#ball.positionX <= this.#goalGreen.positionX && this.#ball.positionY > this.#goalGreen.positionY && this.#ball.positionY < this.#goalGreen.positionY + this.#goalGreen.height) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   get field () {
     return this.#field
   }
 
-  /**
-   *
-   */
   get ball () {
     return this.#ball
   }
 
-  /**
-   *
-   */
   get playerRed () {
     return this.#playerRed
   }
 
-  /**
-   *
-   */
   get playerGreen () {
     return this.#playerGreen
   }
@@ -230,5 +216,9 @@ export class GameModel {
 
   get goalGreen () {
     return this.#goalGreen
+  }
+
+  get scoreBoard () {
+    return this.#scoreBoard
   }
 }

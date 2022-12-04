@@ -48,5 +48,6 @@ export class GameController {
     this.#view.drawGoal(this.#model.goalGreen)
     this.#view.drawPlayer(this.#model.playerRed)
     this.#view.drawPlayer(this.#model.playerGreen)
+    this.#view.updateScoreBoard(this.#model.scoreBoard)
   }
 }
