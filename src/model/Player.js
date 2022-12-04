@@ -10,22 +10,22 @@ export class Player extends Sprite {
 
   moveLeft () {
     this.setCurrentAnimation('left')
-    this.velocityX = -10
+    this.velocityX = -3
   }
 
   moveRight () {
     this.setCurrentAnimation('right')
-    this.velocityX = 10
+    this.velocityX = 3
   }
 
   moveUp () {
     this.setCurrentAnimation('up')
-    this.velocityY = -10
+    this.velocityY = -3
   }
 
   moveDown () {
     this.setCurrentAnimation('down')
-    this.velocityY = 10
+    this.velocityY = 3
   }
 
   dontMoveHorizontally () {

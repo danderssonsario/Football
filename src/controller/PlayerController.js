@@ -19,29 +19,29 @@ export class PlayerController {
   /**
    * Checks controller keys and determines player moves.
    */
-  checkForPlayerMoves () {
-    const keyUp = this.#inputHandler.keys.find(element => element.action === 'up')
-    const keyDown = this.#inputHandler.keys.find(element => element.action === 'down')
-    const keyLeft = this.#inputHandler.keys.find(element => element.action === 'left')
-    const keyRight = this.#inputHandler.keys.find(element => element.action === 'right')
+  doPlayerMoves () {
+    const moveUpKey = this.#inputHandler.keys.find(element => element.action === 'up')
+    const moveDownKey = this.#inputHandler.keys.find(element => element.action === 'down')
+    const moveLeftKey = this.#inputHandler.keys.find(element => element.action === 'left')
+    const moveRightKey = this.#inputHandler.keys.find(element => element.action === 'right')
 
-    if (keyLeft.pressed || keyRight.pressed || keyUp.pressed || keyDown.pressed) {
+    if (moveLeftKey.pressed || moveRightKey.pressed || moveUpKey.pressed || moveDownKey.pressed) {
       this.#player.pauseAnimation = false
-    } else if (!keyLeft.pressed && !keyRight.pressed && !keyUp.pressed && !keyDown.pressed) {
+    } else if (!moveLeftKey.pressed && !moveRightKey.pressed && !moveUpKey.pressed && !moveDownKey.pressed) {
       this.#player.pauseAnimation = true
     }
 
-    if (keyLeft.pressed && !keyRight.pressed) {
+    if (moveLeftKey.pressed && !moveRightKey.pressed) {
       this.#player.moveLeft()
-    } else if (!keyLeft.pressed && keyRight.pressed) {
+    } else if (!moveLeftKey.pressed && moveRightKey.pressed) {
       this.#player.moveRight()
     } else {
       this.#player.dontMoveHorizontally()
     }
 
-    if (keyUp.pressed && !keyDown.pressed) {
+    if (moveUpKey.pressed && !moveDownKey.pressed) {
       this.#player.moveUp()
-    } else if (!keyUp.pressed && keyDown.pressed) {
+    } else if (!moveUpKey.pressed && moveDownKey.pressed) {
       this.#player.moveDown()
     } else {
       this.#player.dontMoveVertically()

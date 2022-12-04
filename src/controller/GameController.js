@@ -35,18 +35,13 @@ export class GameController {
     this.#playerControllerGreen = new PlayerController(this.#model.playerGreen, playerController2)
   }
 
-  start () {
-    const input = this.#view.ge
-    if ()
-  }
-
   /**
    * Runs through all game events.
    */
   run () {
     this.#model.update()
-    this.#playerControllerRed.checkForPlayerMoves()
-    this.#playerControllerGreen.checkForPlayerMoves()
+    this.#playerControllerRed.doPlayerMoves()
+    this.#playerControllerGreen.doPlayerMoves()
     this.#view.drawField(this.#model.field)
     this.#view.drawBall(this.#model.ball)
     this.#view.drawGoal(this.#model.goalRed)

@@ -1,5 +1,6 @@
 /**
  * Input handler for keyup/keydown events.
+ * TODO: Move responsibility of retrieving inputs to view.
  */
 export class InputHandler {
   #keys
