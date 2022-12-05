@@ -5,7 +5,43 @@ import { Sprite } from "../SpriteJS/Sprite";
  */
 export class Player extends Sprite {
   constructor (name, context, options) {
-    super (name, context, options)
+    super(name, context, options)
+    this.addAnimations()
+  }
+
+  addAnimations () {
+    this.addAnimation({
+      name: 'down',
+      frameWidth: 64,
+      frameHeight: 64,
+      frameCount: 4,
+      rowIndex: 0,
+      delayPerFrame: 100
+    })
+    this.addAnimation({
+      name: 'left',
+      frameWidth: 64,
+      frameHeight: 64,
+      frameCount: 4,
+      rowIndex: 1,
+      delayPerFrame: 100
+    })
+    this.addAnimation({
+      name: 'right',
+      frameWidth: 64,
+      frameHeight: 64,
+      frameCount: 4,
+      rowIndex: 2,
+      delayPerFrame: 100
+    })
+    this.addAnimation({
+      name: 'up',
+      frameWidth: 64,
+      frameHeight: 64,
+      frameCount: 4,
+      rowIndex: 3,
+      delayPerFrame: 100
+    })
   }
 
   moveLeft () {

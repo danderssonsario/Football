@@ -10,10 +10,10 @@ import { ScoreBoard } from './Scoreboard.js'
 export class GameModel {
   #field
   #ball
-  #playerRed
-  #playerGreen
-  #goalRed
-  #goalGreen
+  #redPlayer
+  #greenPlayer
+  #redGoal
+  #greenGoal
   #scoreBoard
 
   /**
@@ -27,7 +27,7 @@ export class GameModel {
     this.#ball = new Ball('../image/Ball.png', width / 2 - 15, height / 2 - 15, 15)
     this.#ball.bounds = { x: { min: 50, max: width - 50 }, y: { min: 50, max: height - 50 } }
 
-    const playerRedOptions = {
+    const redPlayerOptions = {
       positionX: 100,
       positionY: height / 2 - 40,
       width: 80,
@@ -36,7 +36,7 @@ export class GameModel {
       angle: 0
     }
 
-    const playerGreenOptions = {
+    const greenPlayerOptions = {
       positionX: width - 200,
       positionY: height / 2 - 40,
       width: 80,
@@ -45,122 +45,46 @@ export class GameModel {
       angle: 0
     }
 
-    this.#playerRed = new Player('player1', context, playerRedOptions)
-    this.#playerGreen = new Player('player2', context, playerGreenOptions)
-    this.#playerRed.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
-    this.#playerGreen.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
-    this.#addPlayerAnimations()
-    this.#playerRed.setCurrentAnimation('right')
-    this.#playerGreen.setCurrentAnimation('left')
+    this.#redPlayer = new Player('player1', context, redPlayerOptions)
+    this.#greenPlayer = new Player('player2', context, greenPlayerOptions)
+    this.#redPlayer.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
+    this.#greenPlayer.bounds = { x: { min: 0, max: width }, y: { min: 0, max: height } }
+    this.#redPlayer.setCurrentAnimation('right')
+    this.#greenPlayer.setCurrentAnimation('left')
 
-    this.#goalRed = new Goal('red', 50, (height - 150) / 2, 150)
-    this.#goalGreen = new Goal('green', width - 50, (height - 150) / 2, 150)
+    this.#redGoal = new Goal('red', 50, (height - 150) / 2, 150)
+    this.#greenGoal = new Goal('green', width - 50, (height - 150) / 2, 150)
     this.#scoreBoard = new ScoreBoard(0, 0)
-  }
-
-  /**
-   *
-   */
-  #addPlayerAnimations () {
-    this.#playerRed.addAnimation({
-      name: 'down',
-      frameWidth: 64,
-      frameHeight: 64,
-      frameCount: 4,
-      rowIndex: 0,
-      delayPerFrame: 100
-    })
-    this.#playerRed.addAnimation({
-      name: 'left',
-      frameWidth: 64,
-      frameHeight: 64,
-      frameCount: 4,
-      rowIndex: 1,
-      delayPerFrame: 100
-    })
-    this.#playerRed.addAnimation({
-      name: 'right',
-      frameWidth: 64,
-      frameHeight: 64,
-      frameCount: 4,
-      rowIndex: 2,
-      delayPerFrame: 100
-    })
-    this.#playerRed.addAnimation({
-      name: 'up',
-      frameWidth: 64,
-      frameHeight: 64,
-      frameCount: 4,
-      rowIndex: 3,
-      delayPerFrame: 100
-    })
-
-    this.#playerGreen.addAnimation({
-      name: 'down',
-      frameWidth: 64,
-      frameHeight: 64,
-      frameCount: 4,
-      rowIndex: 0,
-      delayPerFrame: 100
-    })
-    this.#playerGreen.addAnimation({
-      name: 'left',
-      frameWidth: 64,
-      frameHeight: 64,
-      frameCount: 4,
-      rowIndex: 1,
-      delayPerFrame: 100
-    })
-    this.#playerGreen.addAnimation({
-      name: 'right',
-      frameWidth: 64,
-      frameHeight: 64,
-      frameCount: 4,
-      rowIndex: 2,
-      delayPerFrame: 100
-    })
-    this.#playerGreen.addAnimation({
-      name: 'up',
-      frameWidth: 64,
-      frameHeight: 64,
-      frameCount: 4,
-      rowIndex: 3,
-      delayPerFrame: 100
-    })
   }
 
   /**
    * Updates game objects.
    */
   update () {
-    this.#playerRed.update()
-    this.#playerGreen.update()
+    this.#redPlayer.update()
+    this.#greenPlayer.update()
     this.#ball.update()
     this.#checkForPlayerToBallCollision()
     this.#checkBallToGoalCollision()
   }
 
-  /**
-   *
-   */
   #checkForPlayerToBallCollision () {
-    if (this.#playerRedCollidesWithBall()) {
-      this.#playerRed.kick(this.#ball)
+    if (this.#redPlayerCollidesWithBall()) {
+      this.#redPlayer.kick(this.#ball)
     }
-    if (this.#playerGreenCollidesWithBall()) {
-      this.#playerGreen.kick(this.#ball)
+    if (this.#greenPlayerCollidesWithBall()) {
+      this.#greenPlayer.kick(this.#ball)
     }
-
   }
 
-  #playerRedCollidesWithBall () {
-    return this.#playerRed.distanceTo(this.#ball) < (this.#playerRed.width / 2 + this.#ball.radius) ||
-           this.#playerRed.distanceTo(this.#ball) < (this.#playerRed.height / 2 + this.#ball.radius)
+  #redPlayerCollidesWithBall () {
+    return this.#redPlayer.distanceTo(this.#ball) < (this.#redPlayer.width / 2 + this.#ball.radius) ||
+           this.#redPlayer.distanceTo(this.#ball) < (this.#redPlayer.height / 2 + this.#ball.radius)
   }
 
-  #playerGreenCollidesWithBall () {
-    return this.#playerGreen.distanceTo(this.#ball) < this.#playerGreen.width / 2 ||
-           this.#playerGreen.distanceTo(this.#ball) < this.#playerGreen.height / 2
+  #greenPlayerCollidesWithBall () {
+    return this.#greenPlayer.distanceTo(this.#ball) < this.#greenPlayer.width / 2 ||
+           this.#greenPlayer.distanceTo(this.#ball) < this.#greenPlayer.height / 2
   }
 
   /**
@@ -175,23 +99,19 @@ export class GameModel {
       this.#scoreBoard.addScoreForGreenTeam()
     }
   }
-  
+
   // todo: refactorera denna
   // skapa en detectcollision i ball och skicka in player för att undvika code duplication?
   #ballCollidesWithRedGoal () {
-    if (this.#ball.positionX <= this.#goalRed.positionX && this.#ball.positionY > this.#goalRed.positionY && this.#ball.positionY < this.#goalRed.positionY + this.#goalRed.height) {
-      return true
-    } else {
-      return false
-    }
+    return this.#ball.positionX <= this.#redGoal.positionX &&
+    this.#ball.positionY > this.#redGoal.positionY &&
+    this.#ball.positionY < this.#redGoal.positionY + this.#redGoal.height
   }
 
   #ballCollidesWithGreenGoal () {
-    if (this.#ball.positionX <= this.#goalGreen.positionX && this.#ball.positionY > this.#goalGreen.positionY && this.#ball.positionY < this.#goalGreen.positionY + this.#goalGreen.height) {
-      return true
-    } else {
-      return false
-    }
+    return this.#ball.positionX <= this.#greenGoal.positionX &&
+    this.#ball.positionY > this.#greenGoal.positionY &&
+    this.#ball.positionY < this.#greenGoal.positionY + this.#greenGoal.height
   }
 
   get field () {
@@ -202,20 +122,20 @@ export class GameModel {
     return this.#ball
   }
 
-  get playerRed () {
-    return this.#playerRed
+  get redPlayer () {
+    return this.#redPlayer
   }
 
-  get playerGreen () {
-    return this.#playerGreen
+  get greenPlayer () {
+    return this.#greenPlayer
   }
 
-  get goalRed () {
-    return this.#goalRed
+  get redGoal () {
+    return this.#redGoal
   }
 
-  get goalGreen () {
-    return this.#goalGreen
+  get greenGoal () {
+    return this.#greenGoal
   }
 
   get scoreBoard () {

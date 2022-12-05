@@ -24,5 +24,9 @@ export class Ball extends Circle {
     super.update()
   }
 
+  isCollidedWith (target) {
+    return this.distanceTo(target) < (target.width / 2 + this.radius) ||
+           this.distanceTo(target) < (target.height / 2 + this.radius)
+  }
   
 }

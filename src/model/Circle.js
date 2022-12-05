@@ -50,4 +50,36 @@ export class Circle extends Body {
       this.velocityY *= -1.5
     }
   }
+
+  /**
+   * Gets distance between center point of this and target.
+   * Defaults to center point if target is two dimensional.
+   *
+   * @param {object} target - Target object.
+   * @returns {number} Distance in points.
+   */
+  distanceTo (target) {
+    const centerX = this.positionX + this.width / 2
+    const centerY = this.positionY + this.height / 2
+    const targetCenterX = target.positionX + (target.width / 2 || 0)
+    const targetCenterY = target.positionY + (target.height / 2 || 0)
+
+    return Math.sqrt(Math.pow(centerX - targetCenterX, 2) + Math.pow(centerY - targetCenterY, 2))
+  }
+
+  /**
+   * Gets angle between center point of rectangle and target.
+   * Defaults to center point if target is two dimensional.
+   *
+   * @param {object} target - Target object.
+   * @returns {number} - Angle in degrees.
+   */
+  angleTo (target) {
+    const centerX = this.positionX + this.width / 2
+    const centerY = this.positionY + this.height / 2
+    const targetCenterX = target.positionX + (target.width / 2 || 0)
+    const targetCenterY = target.positionY + (target.height / 2 || 0)
+
+    return (Math.atan2(targetCenterY - centerY, targetCenterX - centerX) * 180) / Math.PI
+  }
 }
