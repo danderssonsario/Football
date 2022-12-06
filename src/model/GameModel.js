@@ -5,7 +5,7 @@ import { Player } from './Player.js'
 import { ScoreBoard } from './Scoreboard.js'
 
 /**
- * Encapsulates game objects and rules.
+ * Encapsulates game objects.
  */
 export class GameModel {
   #field
@@ -52,8 +52,8 @@ export class GameModel {
     this.#redPlayer.setCurrentAnimation('right')
     this.#greenPlayer.setCurrentAnimation('left')
 
-    this.#redGoal = new Goal('red', 50, (height - 150) / 2, 150)
-    this.#greenGoal = new Goal('green', width - 50, (height - 150) / 2, 150)
+    this.#redGoal = new Goal('red', 50, (height - 150) / 2, 150, 2)
+    this.#greenGoal = new Goal('green', width - 50, (height - 150) / 2, 150, 2)
     this.#scoreBoard = new ScoreBoard(0, 0)
   }
 
@@ -69,35 +69,41 @@ export class GameModel {
   }
 
   #checkForPlayerToBallCollision () {
-    if (this.#redPlayerCollidesWithBall()) {
-      this.#redPlayer.kick(this.#ball)
-    }
-    if (this.#greenPlayerCollidesWithBall()) {
-      this.#greenPlayer.kick(this.#ball)
-    }
-  }
-
-  #redPlayerCollidesWithBall () {
-    return this.#redPlayer.distanceTo(this.#ball) < (this.#redPlayer.width / 2 + this.#ball.radius) ||
-           this.#redPlayer.distanceTo(this.#ball) < (this.#redPlayer.height / 2 + this.#ball.radius)
-  }
-
-  #greenPlayerCollidesWithBall () {
-    return this.#greenPlayer.distanceTo(this.#ball) < this.#greenPlayer.width / 2 ||
-           this.#greenPlayer.distanceTo(this.#ball) < this.#greenPlayer.height / 2
+    /* f (this.#ball.isCollidedWith(this.#redPlayer)) {
+      this.#ball.kick(this.#redPlayer)
+    } */
+   /*  if (this.#ball.isCollidedWith(this.#greenPlayer)) {
+      this.#ball.kick(this.#greenPlayer)
+    } */
   }
 
   /**
    *
    */
   #checkBallToGoalCollision () {
-    if (this.#ballCollidesWithRedGoal()) {
+    //console.log(this.#ball.distanceTo(this.#greenGoal))
+    this.#ball.velocityX = 1
+   /*  if (this.#ball.isCollidedWith(this.#redGoal)) {
       this.#scoreBoard.addScoreForRedTeam()
-    }
+      this.#reset()
+    } */
+    //console.log(this.#ball.distanceTo(this.#greenGoal))
 
-    if (this.#ballCollidesWithGreenGoal()) {
+    if (this.#ball.isCollidedWith(this.#greenGoal)) {
       this.#scoreBoard.addScoreForGreenTeam()
+      this.#reset()
     }
+  }
+
+  #reset () {
+    this.#redPlayer.positionX = 100
+    this.#redPlayer.positionY = this.#field.height / 2 - 40
+    this.#greenPlayer.positionX = this.#field.width - 200
+    this.#greenPlayer.positionY = this.#field.height / 2 - 40
+    this.#ball.positionX = this.#field.width / 2 - 15
+    this.#ball.positionY = this.#field.height / 2 - 15
+    this.#ball.velocityX = 0
+    this.#ball.velocityY = 0
   }
 
   // todo: refactorera denna

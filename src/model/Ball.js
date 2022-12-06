@@ -11,7 +11,7 @@ export class Ball extends Circle {
     super(positionX, positionY, radius)
 
     this.#image = image
-    this.friction = 0.80
+    this.friction = 0.96
   }
 
   get image () {
@@ -24,9 +24,18 @@ export class Ball extends Circle {
     super.update()
   }
 
-  isCollidedWith (target) {
-    return this.distanceTo(target) < (target.width / 2 + this.radius) ||
-           this.distanceTo(target) < (target.height / 2 + this.radius)
+  isCollidedWith (player) {
+    console.log(player.height / 2 + this.radius)
+    return this.distanceTo(player) < (player.width / 2 + this.radius) ||
+           this.distanceTo(player) < (player.height / 2 + this.radius)
   }
-  
+
+  kick (player) {
+    const newVelocityX = this.distanceTo(player) * Math.cos((this.angleTo(player) * Math.PI) / 180) / 7
+    const newVelocityY = this.distanceTo(player) * Math.sin((this.angleTo(player) * Math.PI) / 180) / 7
+    player.velocityX = newVelocityX
+    player.velocityY = newVelocityY
+    this.velocityX = -newVelocityX
+    this.velocityY = -newVelocityY
+  }
 }

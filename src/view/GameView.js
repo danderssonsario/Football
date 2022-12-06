@@ -41,7 +41,7 @@ export class View {
     this.#context.strokeStyle = goal.color
     this.#context.lineWidth = 5
     this.#context.moveTo(goal.positionX, goal.positionY)
-    this.#context.lineTo(goal.positionX, (goal.positionY + goal.width))
+    this.#context.lineTo(goal.positionX, (goal.positionY + goal.height))
     this.#context.stroke()
     this.#context.closePath()
     this.#context.restore()

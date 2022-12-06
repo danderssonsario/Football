@@ -15,6 +15,9 @@ export class Field {
     this.#goalWidth = goalWidth
   }
 
+  update () {
+  }
+
   get width () {
     return this.#width
   }

@@ -31,8 +31,8 @@ export class GameController {
       { value: 's', action: 'down', pressed: false }
     ]
 
-    this.#playerControllerRed = new PlayerController(this.#model.playerRed, playerController1)
-    this.#playerControllerGreen = new PlayerController(this.#model.playerGreen, playerController2)
+    this.#playerControllerRed = new PlayerController(this.#model.redPlayer, playerController1)
+    this.#playerControllerGreen = new PlayerController(this.#model.greenPlayer, playerController2)
   }
 
   /**
@@ -44,10 +44,9 @@ export class GameController {
     this.#playerControllerGreen.doPlayerMoves()
     this.#view.drawField(this.#model.field)
     this.#view.drawBall(this.#model.ball)
-    this.#view.drawGoal(this.#model.goalRed)
-    this.#view.drawGoal(this.#model.goalGreen)
-    this.#view.drawPlayer(this.#model.playerRed)
-    this.#view.drawPlayer(this.#model.playerGreen)
-    this.#view.updateScoreBoard(this.#model.scoreBoard)
+    this.#view.drawGoal(this.#model.redGoal)
+    this.#view.drawGoal(this.#model.greenGoal)
+    this.#view.drawPlayer(this.#model.redPlayer)
+    this.#view.drawPlayer(this.#model.greenPlayer)
   }
 }
