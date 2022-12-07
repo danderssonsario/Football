@@ -24,10 +24,35 @@ export class Ball extends Circle {
     super.update()
   }
 
-  isCollidedWith (player) {
-    console.log(player.height / 2 + this.radius)
-    return this.distanceTo(player) < (player.width / 2 + this.radius) ||
-           this.distanceTo(player) < (player.height / 2 + this.radius)
+  // TODO: Refactor into smaller segments.
+  isCollidedWith (target) {
+    const testX = this.#getClosestTargetX(target)
+    const testY = this.#getClosestTargetY(target)
+
+    const distanceX = this.positionX - testX
+    const distanceY = this.positionY - testY
+    return Math.sqrt(distanceX * distanceX + distanceY * distanceY) <= this.radius
+  }
+
+  // TODO: Collision is detected but off with 30 px (move to right).
+  #getClosestTargetX (target) {
+    if (this.positionX < target.positionX) {
+      return target.positionX
+    } else if (this.positionX > target.positionX + target.width) {
+      return target.positionX + target.width
+    } else {
+      return this.positionX
+    }
+  }
+
+  #getClosestTargetY (target) {
+    if (this.positionY < target.positionY) {
+      return target.positionY
+    } else if (this.positionY > target.positionY + target.height) {
+      return target.positionY + target.height
+    } else {
+      return this.positionY
+    }
   }
 
   kick (player) {

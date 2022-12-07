@@ -52,8 +52,8 @@ export class GameModel {
     this.#redPlayer.setCurrentAnimation('right')
     this.#greenPlayer.setCurrentAnimation('left')
 
-    this.#redGoal = new Goal('red', 50, (height - 150) / 2, 150, 2)
-    this.#greenGoal = new Goal('green', width - 50, (height - 150) / 2, 150, 2)
+    this.#redGoal = new Goal('red', 50, (height - 150) / 2, 150, 5)
+    this.#greenGoal = new Goal('green', width - 50, (height - 150) / 2, 150, 5)
     this.#scoreBoard = new ScoreBoard(0, 0)
   }
 
@@ -69,12 +69,12 @@ export class GameModel {
   }
 
   #checkForPlayerToBallCollision () {
-    /* f (this.#ball.isCollidedWith(this.#redPlayer)) {
+    if (this.#ball.isCollidedWith(this.#redPlayer)) {
       this.#ball.kick(this.#redPlayer)
-    } */
-   /*  if (this.#ball.isCollidedWith(this.#greenPlayer)) {
+    }
+    if (this.#ball.isCollidedWith(this.#greenPlayer)) {
       this.#ball.kick(this.#greenPlayer)
-    } */
+    }
   }
 
   /**
@@ -82,14 +82,15 @@ export class GameModel {
    */
   #checkBallToGoalCollision () {
     //console.log(this.#ball.distanceTo(this.#greenGoal))
-    this.#ball.velocityX = 1
-   /*  if (this.#ball.isCollidedWith(this.#redGoal)) {
+    this.#ball.velocityX = 5
+    if (this.#ball.isCollidedWith(this.#redGoal)) {
       this.#scoreBoard.addScoreForRedTeam()
       this.#reset()
-    } */
+    }
     //console.log(this.#ball.distanceTo(this.#greenGoal))
 
     if (this.#ball.isCollidedWith(this.#greenGoal)) {
+      console.log('hej')
       this.#scoreBoard.addScoreForGreenTeam()
       this.#reset()
     }
@@ -108,17 +109,6 @@ export class GameModel {
 
   // todo: refactorera denna
   // skapa en detectcollision i ball och skicka in player för att undvika code duplication?
-  #ballCollidesWithRedGoal () {
-    return this.#ball.positionX <= this.#redGoal.positionX &&
-    this.#ball.positionY > this.#redGoal.positionY &&
-    this.#ball.positionY < this.#redGoal.positionY + this.#redGoal.height
-  }
-
-  #ballCollidesWithGreenGoal () {
-    return this.#ball.positionX <= this.#greenGoal.positionX &&
-    this.#ball.positionY > this.#greenGoal.positionY &&
-    this.#ball.positionY < this.#greenGoal.positionY + this.#greenGoal.height
-  }
 
   get field () {
     return this.#field
