@@ -24,23 +24,23 @@ export class GameModel {
    */
   constructor (width, height, context) {
     this.#field = new Field(width, height, 75, 150)
-    this.#ball = new Ball('../image/Ball.png', width / 2 - 15, height / 2 - 15, 15)
+    this.#ball = new Ball('../image/Ball.png', width / 2 - 10, height / 2 - 10, 10)
     this.#ball.bounds = { x: { min: 50, max: width - 50 }, y: { min: 50, max: height - 50 } }
 
     const redPlayerOptions = {
       positionX: 100,
-      positionY: height / 2 - 40,
-      width: 80,
-      height: 80,
+      positionY: height / 2 - 30,
+      width: 60,
+      height: 60,
       image: '../image/player1.png',
       angle: 0
     }
 
     const greenPlayerOptions = {
       positionX: width - 200,
-      positionY: height / 2 - 40,
-      width: 80,
-      height: 80,
+      positionY: height / 2 - 30,
+      width: 60,
+      height: 60,
       image: '../image/player2.png',
       angle: 0
     }
@@ -77,38 +77,23 @@ export class GameModel {
     }
   }
 
-  /**
-   *
-   */
   #checkBallToGoalCollision () {
-    //console.log(this.#ball.distanceTo(this.#greenGoal))
-    this.#ball.velocityX = 5
     if (this.#ball.isCollidedWith(this.#redGoal)) {
       this.#scoreBoard.addScoreForRedTeam()
       this.#reset()
     }
-    //console.log(this.#ball.distanceTo(this.#greenGoal))
 
     if (this.#ball.isCollidedWith(this.#greenGoal)) {
-      console.log('hej')
       this.#scoreBoard.addScoreForGreenTeam()
       this.#reset()
     }
   }
 
   #reset () {
-    this.#redPlayer.positionX = 100
-    this.#redPlayer.positionY = this.#field.height / 2 - 40
-    this.#greenPlayer.positionX = this.#field.width - 200
-    this.#greenPlayer.positionY = this.#field.height / 2 - 40
-    this.#ball.positionX = this.#field.width / 2 - 15
-    this.#ball.positionY = this.#field.height / 2 - 15
-    this.#ball.velocityX = 0
-    this.#ball.velocityY = 0
+    this.#redPlayer.reset()
+    this.#greenPlayer.reset()
+    this.#ball.reset()
   }
-
-  // todo: refactorera denna
-  // skapa en detectcollision i ball och skicka in player för att undvika code duplication?
 
   get field () {
     return this.#field

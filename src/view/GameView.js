@@ -37,6 +37,7 @@ export class View {
   }
 
   drawGoal (goal) {
+    //this.#context.fillRect(goal.positionX-31, goal.positionY, goal.width, goal.height)
     this.#context.beginPath()
     this.#context.strokeStyle = goal.color
     this.#context.lineWidth = 5

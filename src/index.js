@@ -17,4 +17,4 @@ function main () {
 
 setInterval(() => {
   requestAnimationFrame(main)
-}, 100)
+}, 10)

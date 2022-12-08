@@ -6,10 +6,13 @@ import { Circle } from './Circle.js'
 export class Ball extends Circle {
   #friction
   #image
+  #initialPositionX
+  #initialPositionY
 
   constructor (image, positionX, positionY, radius) {
     super(positionX, positionY, radius)
-
+    this.#initialPositionX = positionX
+    this.#initialPositionY = positionY
     this.#image = image
     this.friction = 0.96
   }
@@ -24,43 +27,49 @@ export class Ball extends Circle {
     super.update()
   }
 
-  // TODO: Refactor into smaller segments.
   isCollidedWith (target) {
-    const testX = this.#getClosestTargetX(target)
-    const testY = this.#getClosestTargetY(target)
+    const testX = this.#getClosestXPositionOfTarget(target)
+    const testY = this.#getClosestYPositionOfTarget(target)
 
-    const distanceX = this.positionX - testX
-    const distanceY = this.positionY - testY
+    // TODO: Refactor these.
+    const distanceX = this.positionX + this.radius - testX
+    const distanceY = this.positionY + this.radius - testY
+
     return Math.sqrt(distanceX * distanceX + distanceY * distanceY) <= this.radius
   }
 
-  // TODO: Collision is detected but off with 30 px (move to right).
-  #getClosestTargetX (target) {
-    if (this.positionX < target.positionX) {
+  #getClosestXPositionOfTarget (target) {
+    if (this.positionX + this.radius < target.positionX) {
       return target.positionX
-    } else if (this.positionX > target.positionX + target.width) {
+    } else if (this.positionX + this.radius > target.positionX + target.width) {
       return target.positionX + target.width
     } else {
-      return this.positionX
+      return this.positionX + this.radius
     }
   }
 
-  #getClosestTargetY (target) {
-    if (this.positionY < target.positionY) {
+  #getClosestYPositionOfTarget (target) {
+    if (this.positionY + this.radius < target.positionY) {
       return target.positionY
-    } else if (this.positionY > target.positionY + target.height) {
+    } else if (this.positionY + this.radius > target.positionY + target.height) {
       return target.positionY + target.height
     } else {
-      return this.positionY
+      return this.positionY + this.radius
     }
   }
 
   kick (player) {
     const newVelocityX = this.distanceTo(player) * Math.cos((this.angleTo(player) * Math.PI) / 180) / 7
     const newVelocityY = this.distanceTo(player) * Math.sin((this.angleTo(player) * Math.PI) / 180) / 7
-    player.velocityX = newVelocityX
-    player.velocityY = newVelocityY
     this.velocityX = -newVelocityX
     this.velocityY = -newVelocityY
   }
+
+  reset () {
+    this.positionX = this.#initialPositionX
+    this.positionY = this.#initialPositionY
+    this.velocityX = 0
+    this.velocityY = 0
+  }
+  
 }
