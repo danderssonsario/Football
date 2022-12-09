@@ -16,12 +16,6 @@ export class GameModel {
   #greenGoal
   #scoreBoard
 
-  /**
-   *
-   * @param width
-   * @param height
-   * @param context
-   */
   constructor (width, height, context) {
     this.#field = new Field(width, height, 75, 150)
     this.#ball = new Ball('../image/Ball.png', width / 2 - 10, height / 2 - 10, 10)
@@ -65,7 +59,6 @@ export class GameModel {
     this.#greenPlayer.update()
     this.#ball.update()
     this.#checkForPlayerToBallCollision()
-    this.#checkBallToGoalCollision()
   }
 
   #checkForPlayerToBallCollision () {
@@ -77,19 +70,21 @@ export class GameModel {
     }
   }
 
-  #checkBallToGoalCollision () {
+  isGoal () {
     if (this.#ball.isCollidedWith(this.#redGoal)) {
       this.#scoreBoard.addScoreForRedTeam()
-      this.#reset()
+      return true
     }
 
     if (this.#ball.isCollidedWith(this.#greenGoal)) {
       this.#scoreBoard.addScoreForGreenTeam()
-      this.#reset()
+      return true
     }
+
+    return false
   }
 
-  #reset () {
+  reset () {
     this.#redPlayer.reset()
     this.#greenPlayer.reset()
     this.#ball.reset()

@@ -23,39 +23,50 @@ export class Ball extends Circle {
     return img
   }
 
+  get centerPoint () {
+    return { x: this.positionX + this.radius, y: this.positionY + this.radius }
+  }
+
   update () {
     super.update()
   }
 
   isCollidedWith (target) {
-    const testX = this.#getClosestXPositionOfTarget(target)
-    const testY = this.#getClosestYPositionOfTarget(target)
+    const closestX = this.#getClosestXPositionOfTarget(target)
+    const closestY = this.#getClosestYPositionOfTarget(target)
 
-    // TODO: Refactor these.
-    const distanceX = this.positionX + this.radius - testX
-    const distanceY = this.positionY + this.radius - testY
+    const distanceX = this.#getHorizontalDistance(closestX)
+    const distanceY = this.#getVerticalDistance(closestY)
 
     return Math.sqrt(distanceX * distanceX + distanceY * distanceY) <= this.radius
   }
 
   #getClosestXPositionOfTarget (target) {
-    if (this.positionX + this.radius < target.positionX) {
+    if (this.centerPoint.x < target.positionX) {
       return target.positionX
-    } else if (this.positionX + this.radius > target.positionX + target.width) {
+    } else if (this.centerPoint.x > target.positionX + target.width) {
       return target.positionX + target.width
     } else {
-      return this.positionX + this.radius
+      return this.centerPoint.x
     }
   }
 
   #getClosestYPositionOfTarget (target) {
-    if (this.positionY + this.radius < target.positionY) {
+    if (this.centerPoint.y < target.positionY) {
       return target.positionY
-    } else if (this.positionY + this.radius > target.positionY + target.height) {
+    } else if (this.centerPoint.y > target.positionY + target.height) {
       return target.positionY + target.height
     } else {
-      return this.positionY + this.radius
+      return this.centerPoint.y
     }
+  }
+
+  #getHorizontalDistance (point) {
+    return this.centerPoint.x - point
+  }
+
+  #getVerticalDistance (point) {
+    return this.centerPoint.y - point
   }
 
   kick (player) {
@@ -71,5 +82,4 @@ export class Ball extends Circle {
     this.velocityX = 0
     this.velocityY = 0
   }
-  
 }

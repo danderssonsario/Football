@@ -48,5 +48,10 @@ export class GameController {
     this.#view.drawGoal(this.#model.greenGoal)
     this.#view.drawPlayer(this.#model.redPlayer)
     this.#view.drawPlayer(this.#model.greenPlayer)
+
+    if (this.#model.isGoal()) {
+      this.#view.updateScoreBoard(this.#model.scoreBoard)
+      this.#model.reset()
+    }
   }
 }

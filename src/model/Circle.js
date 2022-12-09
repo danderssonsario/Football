@@ -2,8 +2,6 @@ import { Body } from '../SpriteJS/Physics/Body.js'
 
 export class Circle extends Body {
   #bounds
-  #radius
-  #diameter
   constructor (positionX, positionY, radius) {
     super(positionX, positionY)
 
