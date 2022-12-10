@@ -46,11 +46,8 @@ export class Sprite extends Rectangle {
     this.#image = image
     this.#angle = angle
 
-    // Animation
     this.#animations = {}
     this.#currentAnimation = null
-
-    // Current (Animation = one or more frames)
     this.#currentFrame = null
     this.#currentFrameIndex = 0
     this.#pauseAnimation = true
@@ -60,11 +57,13 @@ export class Sprite extends Rectangle {
     return this.#pauseAnimation
   }
 
-  /**
-   * @param {boolean} value
-   */
   set pauseAnimation (value) {
     this.#pauseAnimation = value
+  }
+
+  flip (horizontally, vertically) {
+    this.#flipX = horizontally
+    this.#flipY = vertically
   }
 
   /**
@@ -142,29 +141,12 @@ export class Sprite extends Rectangle {
   }
 
   /**
-   * Draws sprite.
-   */
-  draw () {
-    this.#context.drawImage(
-      this.#currentFrame.image,
-      this.#currentFrame.offsetX,
-      this.#currentFrame.offsetY,
-      this.#currentFrame.frame.width,
-      this.#currentFrame.frame.height,
-      this.positionX,
-      this.positionY,
-      this.width,
-      this.height
-    )
-  }
-
-  /**
    * Flips context if toggled.
    */
   #flipContext () {
-    if (this.flipX || this.flipY) {
+    if (this.#flipX || this.flipY) {
       this.#context.translate(this.positionX + this.width / 2, this.positionY + this.height / 2)
-      this.#context.scale(this.flipX ? -1 : 1, this.flipY ? -1 : 1)
+      this.#context.scale(this.#flipX ? -1 : 1, this.flipY ? -1 : 1)
       this.#context.translate(
         -(this.positionX + this.width / 2),
         -(this.positionY + this.height / 2)
@@ -179,6 +161,23 @@ export class Sprite extends Rectangle {
     this.#context.translate(this.positionX + this.width / 2, this.positionY + this.height / 2)
     this.#context.rotate((this.#angle * Math.PI) / 180)
     this.#context.translate(-(this.positionX + this.width / 2), -(this.positionY + this.height / 2))
+  }
+
+  /**
+   * Draws sprite.
+   */
+  draw () {
+    this.#context.drawImage(
+      this.#currentFrame.image,
+      this.#currentFrame.offsetX,
+      this.#currentFrame.offsetY,
+      this.#currentFrame.frame.width,
+      this.#currentFrame.frame.height,
+      this.positionX,
+      this.positionY,
+      this.width,
+      this.height
+    )
   }
 
   /**
@@ -205,7 +204,7 @@ export class Sprite extends Rectangle {
   }
 
   /**
-   * Sets new frame index from current animation loop.
+   * Sets new frame from current animation loop.
    */
   #updateFrame () {
     this.#currentFrame = this.#currentAnimation.frames[this.#currentFrameIndex]

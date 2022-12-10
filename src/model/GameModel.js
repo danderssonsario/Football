@@ -51,17 +51,13 @@ export class GameModel {
     this.#scoreBoard = new ScoreBoard(0, 0)
   }
 
-  /**
-   * Updates game objects.
-   */
   update () {
     this.#redPlayer.update()
     this.#greenPlayer.update()
     this.#ball.update()
-    this.#checkForPlayerToBallCollision()
   }
 
-  #checkForPlayerToBallCollision () {
+  checkForPlayerToBallCollision () {
     if (this.#ball.isCollidedWith(this.#redPlayer)) {
       this.#ball.kick(this.#redPlayer)
     }
@@ -72,12 +68,12 @@ export class GameModel {
 
   isGoal () {
     if (this.#ball.isCollidedWith(this.#redGoal)) {
-      this.#scoreBoard.addScoreForRedTeam()
+      this.#scoreBoard.addScoreForGreenTeam()
       return true
     }
 
     if (this.#ball.isCollidedWith(this.#greenGoal)) {
-      this.#scoreBoard.addScoreForGreenTeam()
+      this.#scoreBoard.addScoreForRedTeam()
       return true
     }
 

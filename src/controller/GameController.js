@@ -53,5 +53,7 @@ export class GameController {
       this.#view.updateScoreBoard(this.#model.scoreBoard)
       this.#model.reset()
     }
+
+    this.#model.checkForPlayerToBallCollision()
   }
 }

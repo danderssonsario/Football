@@ -97,28 +97,15 @@ export class Rectangle extends Body {
   }
 
   /**
-   * Detects collision.
+   * Detects collision between two rectangles.
    *
    * @param {object} target - { x: number, y: number, width: number, height: number }
    * @returns {boolean} - True if collision is detected, false if not.
    */
   detectCollision (target) {
-    if (this.#overlap(target)) {
-      return true
-    } else {
-      return false
-    }
-  }
-
-  // eslint-disable-next-line jsdoc/require-jsdoc
-  #overlap (target) {
-    if (
-      this.positionX + this.width >= target.positionX &&
+    return this.positionX + this.width >= target.positionX &&
       this.positionX <= target.positionX + target.width &&
       this.positionY + this.height >= target.positionY &&
       this.positionY <= target.positionY + target.height
-    ) {
-      return true
-    }
   }
 }

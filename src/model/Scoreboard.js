@@ -6,6 +6,14 @@ export class ScoreBoard {
     this.#greenScore = greenTeamScore
   }
 
+  get redScore () {
+    return this.#redScore
+  }
+
+  get greenScore () {
+    return this.#greenScore
+  }
+
   addScoreForRedTeam () {
     this.#redScore++
   }
