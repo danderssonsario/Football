@@ -16,31 +16,25 @@ export class GameModel {
   #greenGoal
   #scoreBoard
 
-  /**
-   *
-   * @param width
-   * @param height
-   * @param context
-   */
   constructor (width, height, context) {
     this.#field = new Field(width, height, 75, 150)
-    this.#ball = new Ball('../image/Ball.png', width / 2 - 15, height / 2 - 15, 15)
+    this.#ball = new Ball('../image/Ball.png', width / 2 - 10, height / 2 - 10, 10)
     this.#ball.bounds = { x: { min: 50, max: width - 50 }, y: { min: 50, max: height - 50 } }
 
     const redPlayerOptions = {
       positionX: 100,
-      positionY: height / 2 - 40,
-      width: 80,
-      height: 80,
+      positionY: height / 2 - 30,
+      width: 60,
+      height: 60,
       image: '../image/player1.png',
       angle: 0
     }
 
     const greenPlayerOptions = {
       positionX: width - 200,
-      positionY: height / 2 - 40,
-      width: 80,
-      height: 80,
+      positionY: height / 2 - 30,
+      width: 60,
+      height: 60,
       image: '../image/player2.png',
       angle: 0
     }
@@ -52,66 +46,44 @@ export class GameModel {
     this.#redPlayer.setCurrentAnimation('right')
     this.#greenPlayer.setCurrentAnimation('left')
 
-    this.#redGoal = new Goal('red', 50, (height - 150) / 2, 150)
-    this.#greenGoal = new Goal('green', width - 50, (height - 150) / 2, 150)
+    this.#redGoal = new Goal('red', 50, (height - 150) / 2, 150, 5)
+    this.#greenGoal = new Goal('green', width - 50, (height - 150) / 2, 150, 5)
     this.#scoreBoard = new ScoreBoard(0, 0)
   }
 
-  /**
-   * Updates game objects.
-   */
   update () {
     this.#redPlayer.update()
     this.#greenPlayer.update()
     this.#ball.update()
-    this.#checkForPlayerToBallCollision()
-    this.#checkBallToGoalCollision()
   }
 
-  #checkForPlayerToBallCollision () {
-    if (this.#redPlayerCollidesWithBall()) {
-      this.#redPlayer.kick(this.#ball)
+  checkForPlayerToBallCollision () {
+    if (this.#ball.isCollidedWith(this.#redPlayer)) {
+      this.#ball.kick(this.#redPlayer)
     }
-    if (this.#greenPlayerCollidesWithBall()) {
-      this.#greenPlayer.kick(this.#ball)
+    if (this.#ball.isCollidedWith(this.#greenPlayer)) {
+      this.#ball.kick(this.#greenPlayer)
     }
   }
 
-  #redPlayerCollidesWithBall () {
-    return this.#redPlayer.distanceTo(this.#ball) < (this.#redPlayer.width / 2 + this.#ball.radius) ||
-           this.#redPlayer.distanceTo(this.#ball) < (this.#redPlayer.height / 2 + this.#ball.radius)
-  }
-
-  #greenPlayerCollidesWithBall () {
-    return this.#greenPlayer.distanceTo(this.#ball) < this.#greenPlayer.width / 2 ||
-           this.#greenPlayer.distanceTo(this.#ball) < this.#greenPlayer.height / 2
-  }
-
-  /**
-   *
-   */
-  #checkBallToGoalCollision () {
-    if (this.#ballCollidesWithRedGoal()) {
-      this.#scoreBoard.addScoreForRedTeam()
-    }
-
-    if (this.#ballCollidesWithGreenGoal()) {
+  isGoal () {
+    if (this.#ball.isCollidedWith(this.#redGoal)) {
       this.#scoreBoard.addScoreForGreenTeam()
+      return true
     }
+
+    if (this.#ball.isCollidedWith(this.#greenGoal)) {
+      this.#scoreBoard.addScoreForRedTeam()
+      return true
+    }
+
+    return false
   }
 
-  // todo: refactorera denna
-  // skapa en detectcollision i ball och skicka in player för att undvika code duplication?
-  #ballCollidesWithRedGoal () {
-    return this.#ball.positionX <= this.#redGoal.positionX &&
-    this.#ball.positionY > this.#redGoal.positionY &&
-    this.#ball.positionY < this.#redGoal.positionY + this.#redGoal.height
-  }
-
-  #ballCollidesWithGreenGoal () {
-    return this.#ball.positionX <= this.#greenGoal.positionX &&
-    this.#ball.positionY > this.#greenGoal.positionY &&
-    this.#ball.positionY < this.#greenGoal.positionY + this.#greenGoal.height
+  reset () {
+    this.#redPlayer.reset()
+    this.#greenPlayer.reset()
+    this.#ball.reset()
   }
 
   get field () {

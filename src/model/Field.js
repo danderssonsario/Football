@@ -1,5 +1,5 @@
 /**
- * Encapsulates a football field.
+ * Holds football field data.
  */
 export class Field {
   #width

@@ -1,9 +1,10 @@
 import { Body } from '../SpriteJS/Physics/Body.js'
 
+/**
+ * Wraps body class of SpriteJS module.
+ */
 export class Circle extends Body {
   #bounds
-  #radius
-  #diameter
   constructor (positionX, positionY, radius) {
     super(positionX, positionY)
 

@@ -7,7 +7,6 @@ export class PlayerController {
   #inputHandler
 
   /**
-   *
    * @param {object} player - Player instance.
    * @param {object} controllers - Controllers for moving player.
    */
@@ -18,6 +17,7 @@ export class PlayerController {
 
   /**
    * Checks controller keys and determines player moves.
+   * TODO: Refactor this method.
    */
   doPlayerMoves () {
     const moveUpKey = this.#inputHandler.keys.find(element => element.action === 'up')

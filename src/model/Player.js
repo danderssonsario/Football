@@ -4,8 +4,12 @@ import { Sprite } from "../SpriteJS/Sprite";
  * Class that wraps the Sprite class.
  */
 export class Player extends Sprite {
+  #initialPositionX
+  #initialPositionY
   constructor (name, context, options) {
     super(name, context, options)
+    this.#initialPositionX = options.positionX
+    this.#initialPositionY = options.positionY
     this.addAnimations()
   }
 
@@ -70,5 +74,10 @@ export class Player extends Sprite {
 
   dontMoveVertically () {
     this.velocityY = 0
+  }
+
+  reset () {
+    this.positionX = this.#initialPositionX
+    this.positionY = this.#initialPositionY
   }
 }
