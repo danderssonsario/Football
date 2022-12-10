@@ -1,3 +1,6 @@
+/**
+ * Class that keeps track of the scores.
+ */
 export class ScoreBoard {
   #redScore
   #greenScore

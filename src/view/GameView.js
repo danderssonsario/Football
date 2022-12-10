@@ -1,5 +1,5 @@
 /**
- * Class responsible for drawing to canvas.
+ * Class responsible for updating the view.
  */
 export class View {
   #context

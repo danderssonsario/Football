@@ -1,3 +1,6 @@
+/**
+ * Holds data of goal.
+ */
 export class Goal {
   #color
   #positionX

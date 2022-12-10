@@ -5,7 +5,7 @@ import { Player } from './Player.js'
 import { ScoreBoard } from './Scoreboard.js'
 
 /**
- * Encapsulates game objects.
+ * Encapsulates game objects and rules.
  */
 export class GameModel {
   #field

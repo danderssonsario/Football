@@ -1,4 +1,3 @@
-/* eslint-disable accessor-pairs */
 import { Body } from './Body.js'
 
 /**
@@ -6,15 +5,7 @@ import { Body } from './Body.js'
  */
 export class Rectangle extends Body {
   #bounds
-  #width
-  #height
-  /**
-   *
-   * @param {number} width - Width of rectangle object.
-   * @param {number} height - Height of rectangle object.
-   * @param {number} positionX - X coordinate of rectangle object.
-   * @param {number} positionY - Y coordinate of rectangle object.
-   */
+
   constructor (width, height, positionX, positionY) {
     super(positionX, positionY)
     this.width = width

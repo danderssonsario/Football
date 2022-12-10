@@ -1,5 +1,8 @@
 import { Body } from '../SpriteJS/Physics/Body.js'
 
+/**
+ * Wraps body class of SpriteJS module.
+ */
 export class Circle extends Body {
   #bounds
   constructor (positionX, positionY, radius) {
