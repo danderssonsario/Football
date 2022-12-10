@@ -14,7 +14,7 @@ export class Ball extends Circle {
     this.#initialPositionX = positionX
     this.#initialPositionY = positionY
     this.#image = image
-    this.friction = 0.05
+    this.friction = 0.95
   }
 
   get image () {

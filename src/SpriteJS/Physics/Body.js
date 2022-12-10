@@ -8,7 +8,7 @@ export class Body {
   #velocityY = 0
   #accelerationX = 0
   #accelerationY = 0
-  #friction = 0
+  #friction = 1
 
   /**
    * @param {number} positionX - X coordinate of body object.
